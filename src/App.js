@@ -7,6 +7,7 @@ import TradeCard from './components/TradeCard'
 import './App.css'
 
 const App = ({ contract, currentUser, nearConfig, wallet }) => {
+  const [isLoading, setLoading] = useState(false);
 
   const signIn = useCallback(() => {
     wallet.requestSignIn(nearConfig.contractName, "NEAR ART Coin");
@@ -14,9 +15,27 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
 
   const signOut = useCallback(() => {
     wallet.signOut();
+    setTimeout(setLoading(true), 5000);
     window.location = "/";
     setLoading(false);
   }, [wallet]);
+
+  if (isLoading) {
+    console.log("come here")
+    return (
+      <Container>
+      <header>ART Coin Exchange</header>
+      <div>
+      <Spinner animation="border" size="sm" variant="warning"/>
+      <Spinner animation="border" size="sm" variant="warning"/>
+      <Spinner animation="border" size="sm" variant="warning"/>
+      <Spinner animation="border" variant="warning"/>
+      <Spinner animation="border" variant="warning"/>
+      <Spinner animation="border" variant="warning"/>
+      </div>
+    </Container>
+    )
+  }
 
   return (
     <Container>
