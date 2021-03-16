@@ -7,7 +7,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev-deploy": "near dev-deploy ./contract/art.wasm"
+    "dev-deploy": "near dev-deploy ./contract/art.wasm",
+    "deploy": "near deploy --accountId artcoin.testnet --wasmFile ./contract/art.wasm --initFunction new --initArgs {owner_id: 'artcoin.testnet', total_supply: '1000000000000000000000000000000000', ausd_token: 'ausd.artcoin.testnet'}"
   },
   "eslintConfig": {
     "extends": [

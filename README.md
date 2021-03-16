@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+#### deploy command
+ near deploy --accountId artcoin.testnet --wasmFile ./contract/art.wasm --initFunction new --initArgs '{"owner_id": "artcoin.testnet", "total_supply": "1000000000000000000000000000000000", "ausd_token": "ausd.artcoin.testnet"}'
