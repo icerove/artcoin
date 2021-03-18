@@ -6,7 +6,7 @@ import TradeCard from './components/TradeCard'
 
 import './App.css'
 
-const App = ({ contract, currentUser, nearConfig, wallet }) => {
+const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   const [isLoading, setLoading] = useState(false);
 
   const signIn = useCallback(() => {
@@ -21,7 +21,6 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
   }, [wallet]);
 
   if (isLoading) {
-    console.log("come here")
     return (
       <Container>
       <header>ART Coin Exchange</header>
@@ -41,13 +40,18 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
     <Container>
       <header>ART Coin Exchange</header>
         <ARTCard 
+          ausdContract={ausdContract}
           currentUser={currentUser} 
           contract={contract}
           signIn={signIn}
           signOut={signOut}
         />
         <hr />
-        {currentUser && <TradeCard contract={contract}/>}
+        {currentUser && 
+        <TradeCard 
+          contract={contract}
+          accountId={currentUser.accountId}
+        />}
     </Container>
   );
 }

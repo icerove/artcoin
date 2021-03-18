@@ -17,7 +17,6 @@ async function initContract() {
     },
     ...nearConfig
   });
-
   // Needed to access wallet
   const walletConnection = new nearAPI.WalletConnection(near);
 
@@ -35,19 +34,30 @@ async function initContract() {
     // View methods are read-only – they don't modify the state, but usually return some value
     viewMethods: ['get_total_supply', 'get_total_balance', 'get_unstaked_balance', 'get_staked_balance', 'get_price'],
     // Change methods can modify the state, but you don't receive the returned value when called
-    changeMethods: ['stake_and_mint', 'burn_to_unstake'],
+    changeMethods: ['stake_and_mint', 'burn_to_unstake', 'get_some_art'],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
     sender: walletConnection.getAccountId()
   });
 
-  return { contract, currentUser, nearConfig, walletConnection };
+  const ausdContract = await new nearAPI.Contract(walletConnection.account(), 'ausd.artcoin.testnet', {
+    // View methods are read-only – they don't modify the state, but usually return some value
+    viewMethods: ['get_balance'],
+    // Change methods can modify the state, but you don't receive the returned value when called
+    changeMethods: [],
+    // Sender is the account ID to initialize transactions.
+    // getAccountId() will return empty string if user is still unauthorized
+    sender: walletConnection.getAccountId()
+  });
+
+  return { contract, currentUser, nearConfig, walletConnection, ausdContract };
 }
 
 window.nearInitPromise = initContract()
-  .then(({ contract, currentUser, nearConfig, walletConnection }) => {
+  .then(({ contract, currentUser, nearConfig, walletConnection, ausdContract }) => {
     ReactDOM.render(
       <App
+        ausdContract={ausdContract}
         contract={contract}
         currentUser={currentUser}
         nearConfig={nearConfig}
