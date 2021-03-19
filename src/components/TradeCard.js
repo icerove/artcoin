@@ -31,15 +31,15 @@ const TradeCard = ({contract, accountId}) => {
     }
 
     const loadAssetPrice = (a) => {
-        contract.get_asset_balance({account_id: accountId, asset: a})
-        .then((balance) => setAssetB({...assetB, [a]: balance}))
+        contract.get_asset_price({asset: a})
+        .then((price) => {
+            setAssetP({...assetP,[a]: price})
+        })
     }
 
     const loadAssetBalance = (a) => {
-        contract.get_asset_balance({asset: a})
-        .then((b) => {
-            setAssetB({...assetB,[a]: b})
-        })
+        contract.get_asset_balance({account_id: accountId, asset: a})
+        .then((balance) => setAssetB({...assetB, [a]: balance}))
     }
 
     useEffect(() => {
