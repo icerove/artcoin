@@ -2,7 +2,7 @@
   "name": "stable-coin-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://icerove.github.io/artcoin",
+  "homepage": "http://artcoin.network",
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
