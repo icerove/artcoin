@@ -78,6 +78,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         contract.buy_art_with_near({}, GAS, nearDeposit.toString())
     }
 
+    const buyAusdWithNear = (event) => {
+        event.preventDefault()
+        let nearDeposit = new BN(deposit).mul(UNIT).mul(new BN(100000000)).div(new BN(nearPrice))
+        contract.buy_ausd_with_near({}, GAS, nearDeposit.toString())
+    }
+
     // receiver
     const [receiver, setReceiver] = useState('')
     const [amount, setAmount] = useState('')
@@ -152,7 +158,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     {currentUser !== undefined ?
     <> 
         <Row noGutters style={{fontSize:"12px"}} className="p-2 mb-2">
-            After staking every $5 value of ART, you will mint 1 aUSD. In reverse, after burning 1 aUSD, you will get $5 value of ART back.
+            - If you want staking ART, start with "Buy ART with NEAR token"
+            For every $5 value of ART staked, you will mint 1 aUSD. In reverse, after burning 1 aUSD, you will get $5 value of ART back.
+            In future, staking reward and governance will be enabled for ART stakers.
+        </Row>
+        <Row noGutters style={{fontSize:"12px"}} className="p-2 mb-2">
+            - If you just want trading with stable coin, start with "Buy aUSD with NEAR token"
         </Row>
         <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
             <Col>
@@ -164,10 +175,11 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         </Row>
         <Row noGutters className="p-2 mb-2">
             <Col>
-                ART Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                ART Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '} <br />
+                ART Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
             </Col>
-            <Col>
-                ART Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '}
+            <Col>     
+                ART Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
                 <button onClick={() => setShow(true)}>Transfer</button>
                 <Modal show={show} onHide={() =>setShow(false)}>
                     <Modal.Header closeButton>
@@ -248,8 +260,31 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
             <Col>
                 AUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
             </Col>
+        </Row>
+        <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
             <Col>
-                ART Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                <Form style={{width: "100%"}} onSubmit={buyAusdWithNear}>
+                    <Form.Row className="align-items-center">
+                        <Col className="mx-1">
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                            <InputGroup.Text>AUSD Amount</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl  
+                                value={deposit}
+                                onChange={(event) => {
+                                    if (event) {
+                                        const value = event.target !== null ? event.target.value : "";
+                                        setDeposit(value)
+                                    }
+                                }} />
+                        </InputGroup>
+                        </Col>
+                        <Col className="mx-1" style={{textAlign: 'end'}}>
+                        <Button type="submit">Buy aUSD with NEAR token</Button>
+                        </Col>
+                    </Form.Row>
+                </Form>
             </Col>
         </Row>
         <Row noGutters className="p-2 mb-2">

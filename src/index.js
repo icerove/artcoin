@@ -48,7 +48,8 @@ async function initContract() {
                     'buy_asset_with_ausd',
                     'sell_asset_to_ausd',
                     'transfer',
-                    'buy_art_with_near'
+                    'buy_art_with_near',
+                    'buy_ausd_with_near'
                   ],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
