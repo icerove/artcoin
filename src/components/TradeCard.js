@@ -36,9 +36,9 @@ const TradeCard = ({contract, accountId}) => {
     }
 
     const loadAssetBalance = (a) => {
-        contract.get_asset_price({asset: a})
-        .then((price) => {
-            setAssetP({...assetP,[a]: price})
+        contract.get_asset_balance({asset: a})
+        .then((b) => {
+            setAssetB({...assetB,[a]: b})
         })
     }
 
