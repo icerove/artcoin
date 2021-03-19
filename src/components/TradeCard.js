@@ -1,86 +1,195 @@
 import React, {useState, useEffect} from 'react'
-import { Row, Col, Button, Form, FormControl, InputGroup } from 'react-bootstrap'
+import { Row, Col, Button, Form, FormControl, InputGroup, Accordion, Card } from 'react-bootstrap'
+import { formatNearAmount } from "near-api-js/lib/utils/format"
 
-const tokenList = ['aNEAR', 'aBTC','aGOLD', 'aSPY', 'aEUR']
+const GAS = 300000000000000
+
 const TradeCard = ({contract, accountId}) => {
-    const [aNEARP, setaNEARPrice] = useState('0')
-    const [aBTCP, setaBTPrice] = useState('0')
-    const [aGoldP, setaGOLDPrice] = useState('0')
-    const [aSPYP, setaSPYPrice] = useState('0')
-    const [aEURP, setaEURPrice] = useState('0')
 
-    const [aNEARb, setaNEARbalance] = useState('0')
-    const [aBTCb, setaBTbalance] = useState('0')
-    const [aGoldb, setaGOLDbalance] = useState('0')
-    const [aSPYb, setaSPYbalance] = useState('0')
-    const [aEURb, setaEURbalance] = useState('0')
+    const [assetP, setAssetP] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
+    const [assetB, setAssetB] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
+    const [currentAsset, setCurrentAsset] = useState("aBTC")
 
     useEffect(() => {
-        contract.get_asset_price({asset: 'aNEAR'})
-        .then((price) =>setaNEARPrice(price))
         contract.get_asset_price({asset: 'aBTC'})
-        .then((price) =>setaBTPrice(price))
-        contract.get_asset_price({asset: 'aGOLD'})
-        .then((price) =>setaGOLDPrice(price))
-        contract.get_asset_price({asset: 'aSPY'})
-        .then((price) =>setaSPYPrice(price))
-        contract.get_asset_price({asset: 'aEUR'})
-        .then((price) =>setaEURPrice(price))
+        .then((price) => {
+            setAssetP({...assetP,'aBTC': price})
+        })
 
-        contract.get_asset_balance({asset: 'aNEAR'})
-        .then((balance) =>setaNEARbalance(balance))
-        contract.get_asset_price({asset: 'aBTC'})
-        .then((balance) =>setaBTbalance(balance))
-        contract.get_asset_price({asset: 'aGOLD'})
-        .then((balance) =>setaGOLDbalance(balance))
-        contract.get_asset_price({asset: 'aSPY'})
-        .then((balance) =>setaSPYbalance(balance))
-        contract.get_asset_price({asset: 'aEUR'})
-        .then((balance) =>setaEURbalance(balance))
-    })
+        contract.get_asset_balance({account_id: accountId, asset: 'aBTC'})
+        .then((balance) =>setAssetB({...assetB, 'aBTC': balance}))
+        
+    }, [])
 
+    const assetItems = Object.entries(assetB).map(([k, _]) =>
+        <option key={k}>
+        {k}
+        </option>
+    )
+
+    const [buyAmount, setBuyAmount] = useState({asset: '0', aUSD: '0'})
+
+    const [sellAmount, setSellAmount] = useState({asset:'0', aUSD: '0'})
+
+    const buyAssetWithAusd = (event) => {
+        event.preventDefault()
+        let amount = (Number(buyAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
+        contract.buy_asset_with_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+    }
+
+    const sellAssettoAusd = (event) => {
+        event.preventDefault()
+        let amount = (Number(sellAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
+        contract.sell_asset_to_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+    }
 
     return <div className="trade-card">
     <Row noGutters className="p-2" style={{background: '#fff'}}>
        <Col>BUY/SELL</Col> 
        <Col>
-            <button>Reverse</button>
+            <Form.Group controlId="formSelect">
+                <Form.Control 
+                    value={currentAsset} 
+                    as="select" 
+                    onChange={(event) => {
+                        if (event) {
+                            const value = event.target !== null ? event.target.value : "";
+                            setCurrentAsset(value)
+                            contract.get_asset_price({asset: value})
+                            .then((price) => {
+                                setAssetP({...assetP,[value]: price})
+                            })
+                            contract.get_asset_balance({account_id: accountId, asset: value})
+                            .then((balance) =>setAssetB({...assetB, [value]: balance}))
+                          }
+                    }}>
+                    {assetItems}
+                </Form.Control>
+            </Form.Group>
        </Col>
     </Row>
-    <Row noGutters className="p-2 pb-3">
-        <Form style={{width: '100%'}}>
-            <Form.Group controlId="formSell">
-                <Form.Label>SELL: </Form.Label>
-                <InputGroup className="mb-2" >
-                    <InputGroup.Prepend>
-                    <InputGroup.Text>AUSD</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl value="0" />
-                    <p style={{margin: 'auto 5px', verticalAlign:'baseline'}}>Balace: {ausdValue}</p>
-                </InputGroup>
-            </Form.Group>
+    <Accordion>
+        <Card>
+            <Card.Header>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                    BUY
+                </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                    <Form
+                        onSubmit={buyAssetWithAusd} 
+                        style={{width: '100%'}}>
+                        <Form.Group controlId="buyAsset">
+                            <Form.Label>BUY {currentAsset}: </Form.Label>
+                            <InputGroup className="mb-2" >
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>{currentAsset}</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl 
+                                    value={buyAmount.asset}
+                                    onChange={(event) => {
+                                        if (event) {
+                                            const value = event.target !== null ? event.target.value : "";
+                                            setBuyAmount({asset: value, aUSD: Number(value)*Number(assetP[currentAsset])/10**8})
+                                        }
+                                    }} 
+                                />
+                            </InputGroup>
+                        </Form.Group>
 
-            <Form.Group controlId="formBuy">
-                <Form.Label>BUY: </Form.Label>
-                <InputGroup className="mb-2">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text>ABTC</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl placeholder="0" />
-                    <p style={{margin: 'auto 5px', verticalAlign:'baseline'}}>Balace: {abtcValue}</p>
-                </InputGroup>
-            </Form.Group>
+                        <Form.Group controlId="fromausd">
+                            <Form.Label>with aUSD: </Form.Label>
+                            <InputGroup className="mb-2">
+                                <InputGroup.Prepend>
+                                <InputGroup.Text>aUSD</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl 
+                                    value={buyAmount.aUSD}
+                                    onChange={(event) => {
+                                        if (event) {
+                                            const value = event.target !== null ? event.target.value : "";
+                                            setBuyAmount({asset: Number(value)/(Number(assetP[currentAsset])/10**8), aUSD: value})
+                                        }
+                                    }} 
+                                />
+                            </InputGroup>
+                        </Form.Group>
+                        
+                        <Row style={{fontSize: "12px"}}>
+                            <Col>Balace: {formatNearAmount(assetB[currentAsset],5)}</Col>
+                            <Col>Price: 1 {currentAsset} = {(Number(assetP[currentAsset])/10**8).toFixed(4)} aUSD</Col>
+                            <Col>USD VALUE: ${(Number(buyAmount.asset)*Number(assetP[currentAsset])/10**8).toFixed(4)}</Col>
+                        </Row>
 
-            <Row className="mb-2">
-                <Col>USD VALUE</Col>
-                <Col>${usdValue}</Col>
-            </Row>
+                        <Button variant="primary" type="submit">
+                            CONFIRM TRADE
+                        </Button>
+                    </Form>
+                </Card.Body>
+            </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Card.Header>
+            <Accordion.Toggle as={Card.Header} eventKey="1">
+                SELL
+            </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey="1">
+            <Card.Body>
+                <Form 
+                    onSubmit={sellAssettoAusd}
+                    style={{width: '100%'}}>
+                    <Form.Group controlId="sellAsset">
+                        <Form.Label>SELL {currentAsset}: </Form.Label>
+                            <InputGroup className="mb-2" >
+                                <InputGroup.Prepend>
+                                <InputGroup.Text>{currentAsset}</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl 
+                                    value={sellAmount.asset}
+                                    onChange={(event) => {
+                                        if (event) {
+                                            const value = event.target !== null ? event.target.value : "";
+                                            setSellAmount({asset: value, aUSD: Number(value)*Number(assetP[currentAsset])/10**8})
+                                        }
+                                    }} 
+                                 />
+                            </InputGroup>
+                        </Form.Group>
 
-            <Button variant="primary" type="submit">
-                CONFIRM TRADE
-            </Button>
-        </Form>
-    </Row>
+                    <Form.Group controlId="toausd">
+                        <Form.Label>to aUSD: </Form.Label>
+                        <InputGroup className="mb-2">
+                            <InputGroup.Prepend>
+                            <InputGroup.Text>aUSD</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl 
+                                value={sellAmount.aUSD}
+                                onChange={(event) => {
+                                    if (event) {
+                                        const value = event.target !== null ? event.target.value : "";
+                                        setSellAmount({asset: Number(value)/(Number(assetP[currentAsset])/10**8), aUSD: value})
+                                    }
+                                }} 
+                            />
+                        </InputGroup>
+                    </Form.Group>
+                    
+                    <Row style={{fontSize: "12px"}}>
+                        <Col>Balace: {formatNearAmount(assetB[currentAsset],5)}</Col>
+                        <Col>Price: 1 {currentAsset} = {(Number(assetP[currentAsset])/10**8).toFixed(4)} aUSD</Col>
+                        <Col>USD VALUE: ${(Number(sellAmount.asset)*Number(assetP[currentAsset])/10**8).toFixed(4)}</Col>
+                    </Row>
+
+                    <Button variant="primary" type="submit">
+                        CONFIRM TRADE
+                    </Button>
+                </Form>
+            </Card.Body>
+            </Accordion.Collapse>
+        </Card>
+    </Accordion>
     </div>
 }
 
