@@ -142,21 +142,21 @@ const TradeCard = ({contract, accountId}) => {
                     style={{width: '100%'}}>
                     <Form.Group controlId="sellAsset">
                         <Form.Label>SELL {currentAsset}: </Form.Label>
-                            <InputGroup className="mb-2" >
-                                <InputGroup.Prepend>
-                                <InputGroup.Text>{currentAsset}</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl 
-                                    value={sellAmount.asset}
-                                    onChange={(event) => {
-                                        if (event) {
-                                            const value = event.target !== null ? event.target.value : "";
-                                            setSellAmount({asset: value, aUSD: Number(value)*Number(assetP[currentAsset])/10**8})
-                                        }
-                                    }} 
-                                 />
-                            </InputGroup>
-                        </Form.Group>
+                        <InputGroup className="mb-2" >
+                            <InputGroup.Prepend>
+                            <InputGroup.Text>{currentAsset}</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl 
+                                value={sellAmount.asset}
+                                onChange={(event) => {
+                                    if (event) {
+                                        const value = event.target !== null ? event.target.value : "";
+                                        setSellAmount({asset: value, aUSD: Number(value)*Number(assetP[currentAsset])/10**8})
+                                    }
+                                }} 
+                                />
+                        </InputGroup>
+                    </Form.Group>
 
                     <Form.Group controlId="toausd">
                         <Form.Label>to aUSD: </Form.Label>

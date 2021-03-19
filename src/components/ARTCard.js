@@ -32,14 +32,13 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
             setNearPrice(price)
         })
     })
-    
+    console.log(contract)
     // deposit
     const [deposit, setDeposit] = useState('10')
 
     const buyArtWithNear = (event) => {
         event.preventDefault()
         let nearDeposit = new BN(deposit).mul(new BN(artPrice)).mul(UNIT).div(new BN(nearPrice))
-        console.log(nearDeposit.toString())
         contract.buy_art_with_near({}, GAS, nearDeposit.toString())
     }
 
@@ -47,10 +46,8 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     const [receiver, setReceiver] = useState('')
     const [amount, setAmount] = useState('')
 
-    const transfer = (event) => {
+    const transferArt = (event) => {
         event.preventDefault()
-        console.log(amount)
-        console.log(receiver)
         contract.transfer({new_owner_id: receiver, amount: amount + '000000000000000000000000'}, GAS)
     }
 
@@ -106,7 +103,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                         <Modal.Title>Transfer ART to your hoomie</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form style={{width: "100%"}} onSubmit={transfer}>
+                        <Form style={{width: "100%"}} onSubmit={transferArt}>
                             <Form.Group controlId="receiver">
                                 <Form.Label>Receiver: </Form.Label>
                                 <InputGroup className="mb-2" >
