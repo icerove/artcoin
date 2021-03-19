@@ -256,7 +256,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                 </Form>
             </Col>
         </Row>
-        <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
+        <Row noGutters className="p-2" style={{background: '#fff'}}>
             <Col>
                 AUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
             </Col>
