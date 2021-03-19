@@ -9,7 +9,7 @@ import getConfig from "./config";
 // Initializing contract
 async function initContract() {
   const nearConfig = getConfig(process.env.NODE_ENV || 'testnet');
-
+  window.near = nearAPI
   // Initializing connection to the NEAR TestNet
   const near = await nearAPI.connect({
     deps: {

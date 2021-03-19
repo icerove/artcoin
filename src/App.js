@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Spinner } from 'react-bootstrap'
+import { Container, Spinner, Row } from 'react-bootstrap'
 import ARTCard from './components/ARTCard'
 import TradeCard from './components/TradeCard'
 
@@ -36,6 +36,18 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
     )
   }
 
+  if(!currentUser) {
+    return (
+      <Container>
+      <header>ART Coin Exchange</header>
+      <Row noGutters style={{height: '50px'}}>
+        Welcome to ART coin, please log in with NEAR wallet to start journey!
+      </Row>
+      <button onClick={signIn}>Log In</button>
+    </Container>
+    )
+  }
+
   return (
     <Container>
       <header>ART Coin Exchange</header>
@@ -47,11 +59,10 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           signOut={signOut}
         />
         <hr />
-        {currentUser && 
         <TradeCard 
           contract={contract}
           accountId={currentUser.accountId}
-        />}
+        />
     </Container>
   );
 }
