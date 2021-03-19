@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Row, Col, Button, Form, InputGroup, FormControl, Modal } from 'react-bootstrap';
+import { Row, Col, Button, Form, InputGroup, FormControl, Modal, Spinner } from 'react-bootstrap';
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from 'bn.js'
 
@@ -7,31 +7,61 @@ const GAS = 300000000000000
 const UNIT = new BN('1000000000000000000000000')
 
 const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
-    const [artTotalBalance, setArtTotalBalance] = useState('0')
-    const [artStakedBalance, setArtStakedBalance] = useState('0')
-    const [artUnstakedBalance, setArtUnstakedBalance] = useState('0')
+    const [artTotalBalance, setArtTotalBalance] = useState('l')
+    const [artStakedBalance, setArtStakedBalance] = useState('l')
+    const [artUnstakedBalance, setArtUnstakedBalance] = useState('l')
 
-    const [ausdBalance, setAusdBalance] = useState('0')
-    const [artPrice, setArtPrice] = useState('0')
+    const [ausdBalance, setAusdBalance] = useState('l')
+    const [artPrice, setArtPrice] = useState('l')
     const nearBalance = formatNearAmount(currentUser.balance,5)
-    const [nearPrice, setNearPrice] = useState('0')
+    const [nearPrice, setNearPrice] = useState('l')
+    
+    // Button text, '' means show text, 'l' means show spinner
+    const [transferSubmit, setTransferSubmit] = useState('')
+    const [stakeAndMintLoading, setStakeAndMintLoading ] = useState('')
+    const [unstakAndBurnLoading, setUnstakeAndBurnLoading ] = useState('')
 
-    useEffect(() => {
-        contract.get_total_balance({owner_id: currentUser.accountId})
-        .then((art) => setArtTotalBalance(art))
-        contract.get_unstaked_balance({owner_id: currentUser.accountId})
+    const loadTotalBalance = () => {
+        return contract.get_total_balance({owner_id: currentUser.accountId})
+                .then((art) => setArtTotalBalance(art))
+    }
+
+    const loadUnstakedBalance = () => {
+        return contract.get_unstaked_balance({owner_id: currentUser.accountId})
         .then((art) => setArtUnstakedBalance(art))
-        contract.get_staked_balance({account_id: currentUser.accountId})
+    }
+
+    const loadStakedBalance = () => {
+        return contract.get_staked_balance({account_id: currentUser.accountId})
         .then((art) => setArtStakedBalance(art))
+    }
+
+    const loadPrice = () => {
         contract.get_price()
         .then((price) => setArtPrice(price))
+    }
+
+    const loadAUSDBalance = () => {
         ausdContract.get_balance({owner_id: currentUser.accountId})
         .then((ausd) => setAusdBalance(ausd))
+    }
+
+    const loadNearPrice = () => {
         contract.get_asset_price({asset: 'aNEAR'})
         .then((price) => {
             setNearPrice(price)
         })
-    })
+    }
+
+    useEffect(() => {
+        console.log('hit here')
+        loadTotalBalance()
+        loadUnstakedBalance()
+        loadStakedBalance()
+        loadPrice()
+        loadAUSDBalance()
+        loadNearPrice()
+    }, [])
     console.log(contract)
     // deposit
     const [deposit, setDeposit] = useState('10')
@@ -46,29 +76,64 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     const [receiver, setReceiver] = useState('')
     const [amount, setAmount] = useState('')
 
-    const transferArt = (event) => {
+    const transferArt = async (event) => {
         event.preventDefault()
-        contract.transfer({new_owner_id: receiver, amount: amount + '000000000000000000000000'}, GAS)
+        setArtTotalBalance('l')
+        setArtUnstakedBalance('l')
+        setTransferSubmit('l')
+        await contract.transfer({new_owner_id: receiver, amount: amount + '000000000000000000000000'}, GAS)
+        setTransferSubmit('')
+        setShow(false)
+        loadTotalBalance()
+        loadUnstakedBalance()
     }
 
     // stake
     const [stakeAmount, setStake] = useState('1000')
 
-    const stakeAndmint = (event) => {
+    const sleep = (time) => {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+    const stakeAndmint = async (event) => {
         event.preventDefault()
-        contract.stake_and_mint({stake: stakeAmount + '000000000000000000000000'})
+        setArtUnstakedBalance('l')
+        setArtStakedBalance('l')
+        setAusdBalance('l')
+        setStakeAndMintLoading('l')
+        await contract.stake_and_mint({stake: stakeAmount + '000000000000000000000000'})
+        setStakeAndMintLoading('')
+        loadAUSDBalance()
+        loadStakedBalance()
+        loadUnstakedBalance()
     }
 
     //unstake
     const [unstakeAmount, setUnstake] = useState('1000')
 
-    const burnToUnstake = (event) => {
+    const burnToUnstake = async (event) => {
         event.preventDefault()
-        contract.burn_to_unstake({unstake_amount: unstakeAmount + '000000000000000000000000'})
+        setArtUnstakedBalance('l')
+        setArtStakedBalance('l')
+        setAusdBalance('l')
+        setUnstakeAndBurnLoading('l')
+        await contract.burn_to_unstake({unstake_amount: unstakeAmount + '000000000000000000000000'})
+        setUnstakeAndBurnLoading('')
+        loadAUSDBalance()
+        loadStakedBalance()
+        loadUnstakedBalance()
     }
 
     //modal
     const [show, setShow] = useState(false);
+
+    const maybeLoad = (state, displayFun) => {
+        if (state == 'l') {
+           return <Spinner       size="sm"           animation="border" />
+        } else {
+            return displayFun(state)
+        }
+    } 
 
     return (<div className="art-card">
     <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
@@ -85,18 +150,18 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         </Row>
         <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
             <Col>
-                ART Price: {(Number(artPrice)/10**8).toFixed(2)} $
+                ART Price: {maybeLoad(artPrice, (a) => (Number(a)/10**8).toFixed(2))} $
             </Col>
             <Col>
-                NEAR Price: {(Number(nearPrice)/10**8).toFixed(2)} $
+                NEAR Price: {maybeLoad(nearPrice, (n) => (Number(n)/10**8).toFixed(2))} $
             </Col>
         </Row>
         <Row noGutters className="p-2 mb-2">
             <Col>
-                ART Unstaked Balace: {formatNearAmount(artUnstakedBalance, 5)} ⓐ
+                ART Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
             </Col>
             <Col>
-                ART Total Balace: {formatNearAmount(artTotalBalance, 5)} ⓐ {' '}
+                ART Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '}
                 <button onClick={() => setShow(true)}>Transfer</button>
                 <Modal show={show} onHide={() =>setShow(false)}>
                     <Modal.Header closeButton>
@@ -135,7 +200,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                             </Form.Group>
 
                             <Button type="submit">
-                                Confirm Transfer
+                                {maybeLoad(transferSubmit, (a) => 'Confirm Transfer')}
                             </Button>
                         </Form>
                     </Modal.Body>
@@ -175,10 +240,10 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         </Row>
         <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
             <Col>
-                AUSD Balance: {formatNearAmount(ausdBalance, 5)} $
+                AUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
             </Col>
             <Col>
-                ART Staked Balace: {formatNearAmount(artStakedBalance, 5)} ⓐ
+                ART Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
             </Col>
         </Row>
         <Row noGutters className="p-2 mb-2">
@@ -187,7 +252,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>Amount</InputGroup.Text>
+                        <InputGroup.Text>ART Amount</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl  
                             value={stakeAmount}
@@ -200,7 +265,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                     </InputGroup>
                     </Col>
                     <Col className="mx-1" style={{textAlign: 'end'}}>
-                    <Button type="submit">Stake & Mint</Button>
+                    <Button type="submit">{maybeLoad(stakeAndMintLoading, () => 'Stake & Mint')}</Button>
                     </Col>
                 </Form.Row>
             </Form>
@@ -211,7 +276,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>Amount</InputGroup.Text>
+                        <InputGroup.Text>ART Amount</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl 
                             value={unstakeAmount}
@@ -225,7 +290,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                     </InputGroup>
                     </Col>
                     <Col className="mx-1" style={{textAlign: 'end'}}>
-                    <Button type="submit">Burn to Unstake</Button>
+                    <Button type="submit">{maybeLoad(setUnstakeAndBurnLoading, (a) => 'Burn to Unstake')}</Button>
                     </Col>
                 </Form.Row>
             </Form>
