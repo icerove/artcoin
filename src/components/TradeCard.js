@@ -148,7 +148,7 @@ const TradeCard = ({contract, accountId}) => {
                         </Form.Group>
                         
                         <Row style={{fontSize: "12px"}}>
-                            <Col>Balace: {formatNearAmount(assetB[currentAsset],5)}</Col>
+                            <Col>Balance: {formatNearAmount(assetB[currentAsset],5)}</Col>
                             <Col>Price: 1 {currentAsset} = {(Number(assetP[currentAsset])/10**8).toFixed(4)} aUSD</Col>
                             <Col>USD VALUE: ${(Number(buyAmount.asset)*Number(assetP[currentAsset])/10**8).toFixed(4)}</Col>
                         </Row>
