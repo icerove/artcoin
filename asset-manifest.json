@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/artcoin/static/css/main.5ecf25ae.chunk.css",
+    "main.js": "/artcoin/static/js/main.678436a3.chunk.js",
+    "main.js.map": "/artcoin/static/js/main.678436a3.chunk.js.map",
+    "runtime-main.js": "/artcoin/static/js/runtime-main.42490792.js",
+    "runtime-main.js.map": "/artcoin/static/js/runtime-main.42490792.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/artcoin/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.decfbd10.chunk.js": "/artcoin/static/js/2.decfbd10.chunk.js",
+    "static/js/2.decfbd10.chunk.js.map": "/artcoin/static/js/2.decfbd10.chunk.js.map",
+    "index.html": "/artcoin/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/artcoin/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.5ecf25ae.chunk.css.map": "/artcoin/static/css/main.5ecf25ae.chunk.css.map",
+    "static/js/2.decfbd10.chunk.js.LICENSE.txt": "/artcoin/static/js/2.decfbd10.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.42490792.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.decfbd10.chunk.js",
+    "static/css/main.5ecf25ae.chunk.css",
+    "static/js/main.678436a3.chunk.js"
+  ]
+}
