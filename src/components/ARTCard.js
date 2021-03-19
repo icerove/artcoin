@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Row, Col, Button, Form, InputGroup, FormControl, Modal } from 'react-bootstrap';
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 
+const GAS = 300000000000000
+
 const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     const [artTotalBalance, setArtTotalBalance] = useState('0')
     const [artStakedBalance, setArtStakedBalance] = useState('0')
@@ -26,13 +28,15 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         .then((ausd) => setAusdBalance(ausd))
     })
 
-    const [receiver, setReceiver] = useState('')
-    const [amount, setAmount] = useState('')
+    const [deposit, setdeposit] = useState('')
 
     const buyArtWithNear = () => {
         console.log("buy art with near")
-        // contract.buy_art_with_near()
+        contract.buy_art_with_near({}, GAS, deposit)
     }
+
+    const [receiver, setReceiver] = useState('')
+    const [amount, setAmount] = useState('')
 
     const transfer = () => {
         console.log("transfer")
