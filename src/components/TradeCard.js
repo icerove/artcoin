@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Row, Col, Button, Form, FormControl, InputGroup, Accordion, Card } from 'react-bootstrap'
+import { Row, Col, Button, Form, FormControl, InputGroup, Accordion, Card, Spinner } from 'react-bootstrap'
 import { formatNearAmount } from "near-api-js/lib/utils/format"
 
 const GAS = 300000000000000
@@ -10,15 +10,44 @@ const TradeCard = ({contract, accountId}) => {
     const [assetB, setAssetB] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
     const [currentAsset, setCurrentAsset] = useState("aBTC")
 
-    useEffect(() => {
-        contract.get_asset_price({asset: 'aBTC'})
-        .then((price) => {
-            setAssetP({...assetP,'aBTC': price})
-        })
+    // Button text, '' means show text, 'l' means show spinner
+    const [buyLoading, setBuyLoading] = useState('')
+    const [sellLoading, setSellLoading] = useState('')
 
-        contract.get_asset_balance({account_id: accountId, asset: 'aBTC'})
-        .then((balance) =>setAssetB({...assetB, 'aBTC': balance}))
-        
+    const maybeLoad = (state, displayFun) => {
+        if (state == 'l') {
+           return <Spinner       size="sm"           animation="border" />
+        } else {
+            return displayFun(state)
+        }
+    }
+
+    const loadCurrentAssetPrice = () => {
+        loadAssetPrice(currentAsset)
+    }
+
+    const loadCurrentAssetBalance = () => {
+        loadAssetBalance(currentAsset)
+    }
+
+    const loadAssetPrice = (a) => {
+        contract.get_asset_balance({account_id: accountId, asset: a})
+        .then((balance) => setAssetB({...assetB, [a]: balance}))
+    }
+
+    const loadAssetBalance = (a) => {
+        contract.get_asset_price({asset: a})
+        .then((price) => {
+            setAssetP({...assetP,[a]: price})
+        })
+    }
+
+    useEffect(() => {
+        loadCurrentAssetPrice()
+        loadCurrentAssetBalance()
+        setInterval(() => {
+            loadCurrentAssetPrice() 
+        }, 300000)
     }, [])
 
     const assetItems = Object.entries(assetB).map(([k, _]) =>
@@ -31,16 +60,22 @@ const TradeCard = ({contract, accountId}) => {
 
     const [sellAmount, setSellAmount] = useState({asset:'0', aUSD: '0'})
 
-    const buyAssetWithAusd = (event) => {
+    const buyAssetWithAusd = async (event) => {
         event.preventDefault()
         let amount = (Number(buyAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
-        contract.buy_asset_with_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        setBuyLoading('l')
+        await contract.buy_asset_with_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        await loadCurrentAssetBalance()
+        setBuyLoading('')
     }
 
-    const sellAssettoAusd = (event) => {
+    const sellAssettoAusd = async (event) => {
         event.preventDefault()
         let amount = (Number(sellAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
-        contract.sell_asset_to_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        setSellLoading('l')
+        await contract.sell_asset_to_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        await loadCurrentAssetBalance()
+        setSellLoading('')
     }
 
     return <div className="trade-card">
@@ -55,13 +90,9 @@ const TradeCard = ({contract, accountId}) => {
                         if (event) {
                             const value = event.target !== null ? event.target.value : "";
                             setCurrentAsset(value)
-                            contract.get_asset_price({asset: value})
-                            .then((price) => {
-                                setAssetP({...assetP,[value]: price})
-                            })
-                            contract.get_asset_balance({account_id: accountId, asset: value})
-                            .then((balance) =>setAssetB({...assetB, [value]: balance}))
-                          }
+                            loadAssetBalance(value)
+                            loadAssetPrice(value)
+                        }
                     }}>
                     {assetItems}
                 </Form.Control>
@@ -123,7 +154,7 @@ const TradeCard = ({contract, accountId}) => {
                         </Row>
 
                         <Button variant="primary" type="submit">
-                            CONFIRM TRADE
+                            {maybeLoad(buyLoading, (a) => 'CONFIRM TRADE')}
                         </Button>
                     </Form>
                 </Card.Body>
@@ -183,7 +214,7 @@ const TradeCard = ({contract, accountId}) => {
                     </Row>
 
                     <Button variant="primary" type="submit">
-                        CONFIRM TRADE
+                        {maybeLoad(sellLoading, (a) => 'CONFIRM TRADE')}
                     </Button>
                 </Form>
             </Card.Body>

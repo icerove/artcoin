@@ -61,6 +61,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         loadPrice()
         loadAUSDBalance()
         loadNearPrice()
+
+        setInterval(() => {
+            loadPrice()
+            loadAUSDBalance()
+            loadNearPrice() 
+        }, 300000)
     }, [])
     console.log(contract)
     // deposit
