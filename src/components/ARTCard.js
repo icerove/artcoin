@@ -258,7 +258,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         </Row>
         <Row noGutters className="p-2" style={{background: '#fff'}}>
             <Col>
-                AUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
+                aUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
             </Col>
         </Row>
         <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
@@ -268,7 +268,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                         <Col className="mx-1">
                         <InputGroup>
                             <InputGroup.Prepend>
-                            <InputGroup.Text>AUSD Amount</InputGroup.Text>
+                            <InputGroup.Text>aUSD Amount</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl  
                                 value={deposit}
