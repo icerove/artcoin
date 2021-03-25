@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import { Row, Col, Button, Form, InputGroup, FormControl, Modal, Spinner } from 'react-bootstrap';
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from 'bn.js'
+import AlertBanner from './Alerts'
 
 const GAS = 300000000000000
 const UNIT = new BN('1000000000000000000000000')
 
-const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
+const ARTCard = ({currentUser, contract, ausdContract}) => {
     const [artTotalBalance, setArtTotalBalance] = useState('l')
     const [artStakedBalance, setArtStakedBalance] = useState('l')
     const [artUnstakedBalance, setArtUnstakedBalance] = useState('l')
@@ -54,7 +55,6 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     }
 
     useEffect(() => {
-        console.log('hit here')
         loadTotalBalance()
         loadUnstakedBalance()
         loadStakedBalance()
@@ -68,7 +68,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
             loadNearPrice() 
         }, 300000)
     }, [])
-    console.log(contract)
+
     // deposit
     const [deposit, setDeposit] = useState('10')
 
@@ -84,7 +84,11 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         contract.buy_ausd_with_near({}, GAS, nearDeposit.toString())
     }
 
-    // receiver
+    // alert
+    const [alert, setAlert] = useState(false)
+    const [error, setError] = useState('')
+
+    // transfer
     const [receiver, setReceiver] = useState('')
     const [amount, setAmount] = useState('')
 
@@ -93,7 +97,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         setArtTotalBalance('l')
         setArtUnstakedBalance('l')
         setTransferSubmit('l')
-        await contract.transfer({new_owner_id: receiver, amount: amount + '000000000000000000000000'}, GAS)
+        try {
+            await contract.transfer({new_owner_id: receiver, amount: amount + '000000000000000000000000'}, GAS)
+        } catch(e) {
+            setAlert(true)
+            setError(e.message)
+        }
         setTransferSubmit('')
         setShow(false)
         loadTotalBalance()
@@ -113,7 +122,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         setArtStakedBalance('l')
         setAusdBalance('l')
         setStakeAndMintLoading('l')
-        await contract.stake_and_mint({stake: stakeAmount + '000000000000000000000000'})
+        try {
+            await contract.stake_and_mint({stake: stakeAmount + '000000000000000000000000'})
+        } catch(e) {
+            setAlert(true)
+            setError(e.message)
+        }
         setStakeAndMintLoading('')
         loadAUSDBalance()
         loadStakedBalance()
@@ -129,7 +143,12 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
         setArtStakedBalance('l')
         setAusdBalance('l')
         setUnstakeAndBurnLoading('l')
-        await contract.burn_to_unstake({unstake_amount: unstakeAmount + '000000000000000000000000'})
+        try {
+            await contract.burn_to_unstake({unstake_amount: unstakeAmount + '000000000000000000000000'})
+        } catch(e) {
+            setAlert(true)
+            setError(e.message)
+        }
         setUnstakeAndBurnLoading('')
         loadAUSDBalance()
         loadStakedBalance()
@@ -148,12 +167,10 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
     } 
 
     return (<div className="art-card">
+    {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}    
     <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
         <Col>NEAR Wallet : {currentUser.accountId} </Col>
         <Col>NEAR Balance: {nearBalance} Ⓝ</Col>
-        <Col style={{textAlign: 'end'}}>
-            {currentUser && <button onClick={signOut}>Log Out</button>}
-        </Col>
     </Row>
     {currentUser !== undefined ?
     <> 
@@ -331,7 +348,7 @@ const ARTCard = ({currentUser, contract, signIn, signOut, ausdContract}) => {
                     </InputGroup>
                     </Col>
                     <Col className="mx-1" style={{textAlign: 'end'}}>
-                    <Button type="submit">{maybeLoad(setUnstakeAndBurnLoading, (a) => 'Burn to Unstake')}</Button>
+                    <Button type="submit">{maybeLoad(unstakAndBurnLoading, (a) => 'Burn to Unstake')}</Button>
                     </Col>
                 </Form.Row>
             </Form>

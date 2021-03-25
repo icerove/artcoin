@@ -1,9 +1,13 @@
 import React, {useState, useCallback} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Spinner, Row } from 'react-bootstrap'
+import { Route, Switch } from "react-router-dom";
+
 import ARTCard from './components/ARTCard'
 import TradeCard from './components/TradeCard'
-
+import Dash from './components/Dash'
+import Header from './components/Header'
+ 
 import './App.css'
 
 const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
@@ -35,34 +39,38 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
     </Container>
     )
   }
-
+  console.log(currentUser)
   if(!currentUser) {
     return (
       <Container>
-      <header>ART Coin Exchange</header>
-      <Row noGutters style={{height: '50px'}}>
-        Welcome to ART coin, please log in with NEAR wallet to start journey!
-      </Row>
-      <button onClick={signIn}>Log In</button>
-    </Container>
+        <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
+        <Row noGutters style={{height: '50px'}}>
+          Welcome to ART coin, please log in with NEAR wallet to start journey!
+        </Row>
+        <button onClick={signIn}>Log In</button>
+      </Container>
     )
   }
 
   return (
     <Container>
-      <header>ART Coin Exchange</header>
-        <ARTCard 
-          ausdContract={ausdContract}
-          currentUser={currentUser} 
-          contract={contract}
-          signIn={signIn}
-          signOut={signOut}
+      <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
+      <Switch>
+        <Route exact path="/" 
+          render={() => <Dash contract={contract} accountId={currentUser.accountId}/>}/>
+        <Route exact path="/stake" 
+          render={() => <ARTCard contract={contract} currentUser={currentUser} ausdContract={ausdContract} />} />
+        <Route exact path="/trade" 
+          render={() => <TradeCard contract={contract} accountId={currentUser.accountId}/>}/>
+        <Route
+          render={() => (
+            <h1>
+              Not found This page. Please go back to continue or you can contact
+              us about the issue.
+            </h1>
+          )}
         />
-        <hr />
-        <TradeCard 
-          contract={contract}
-          accountId={currentUser.accountId}
-        />
+      </Switch>
     </Container>
   );
 }

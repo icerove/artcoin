@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
+
 import './index.css';
 import App from './App';
 
@@ -72,13 +74,15 @@ async function initContract() {
 window.nearInitPromise = initContract()
   .then(({ contract, currentUser, nearConfig, walletConnection, ausdContract }) => {
     ReactDOM.render(
+      <BrowserRouter>
       <App
         ausdContract={ausdContract}
         contract={contract}
         currentUser={currentUser}
         nearConfig={nearConfig}
         wallet={walletConnection}
-      />,
+      />
+      </BrowserRouter>,
       document.getElementById('root')
     );
   });

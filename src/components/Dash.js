@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Row, Col, Button, Form, FormControl, InputGroup, Accordion, Card, Spinner } from 'react-bootstrap'
 import { formatNearAmount } from "near-api-js/lib/utils/format"
-import AlertBanner from './Alerts'
 
 const GAS = 300000000000000
 
-const TradeCard = ({contract, accountId}) => {
+const Dash = ({contract, accountId}) => {
 
     const [assetP, setAssetP] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
     const [assetB, setAssetB] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
@@ -57,10 +56,6 @@ const TradeCard = ({contract, accountId}) => {
         </option>
     )
 
-    // alert
-    const [alert, setAlert] = useState(false)
-    const [error, setError] = useState('')
-
     const [buyAmount, setBuyAmount] = useState({asset: '0', aUSD: '0'})
 
     const [sellAmount, setSellAmount] = useState({asset:'0', aUSD: '0'})
@@ -69,13 +64,8 @@ const TradeCard = ({contract, accountId}) => {
         event.preventDefault()
         let amount = (Number(buyAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
         setBuyLoading('l')
-        try {
-            await contract.buy_asset_with_ausd({asset: currentAsset, asset_amount: amount}, GAS)
-            await loadCurrentAssetBalance()        
-        } catch(e) {
-            setAlert(true)
-            setError(e.message)
-        }
+        await contract.buy_asset_with_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        await loadCurrentAssetBalance()
         setBuyLoading('')
     }
 
@@ -83,18 +73,12 @@ const TradeCard = ({contract, accountId}) => {
         event.preventDefault()
         let amount = (Number(sellAmount.asset)*(10**24)).toLocaleString('fullwide', {useGrouping:false})
         setSellLoading('l')
-        try {
-            await contract.sell_asset_to_ausd({asset: currentAsset, asset_amount: amount}, GAS)
-            await loadCurrentAssetBalance()       
-        } catch(e) {
-            setAlert(true)
-            setError(e.message)
-        }
+        await contract.sell_asset_to_ausd({asset: currentAsset, asset_amount: amount}, GAS)
+        await loadCurrentAssetBalance()
         setSellLoading('')
     }
 
     return <div className="trade-card">
-    {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}    
     <Row noGutters className="p-2" style={{background: '#fff'}}>
        <Col>BUY/SELL</Col> 
        <Col>
@@ -240,5 +224,5 @@ const TradeCard = ({contract, accountId}) => {
     </div>
 }
 
-export default TradeCard
+export default Dash
 
