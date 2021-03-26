@@ -34,14 +34,14 @@ const Header = ({currentUser, signIn, signOut}) => {
             <Col>
                 <NavLink exact to="/trade">Trade</NavLink>
             </Col>
-            <Col>
+            {/* <Col>
                 <NavLink exact to="/questions">FAQs</NavLink>
             </Col>
             <Col>
                 <NavLink exact to="/docs">DOCs</NavLink>
-            </Col>
+            </Col> */}
             <Col onClick={signOut}>
-                Sign Out
+                <button onClick={signOut}>Sign Out</button>
             </Col>
         </Row>
     </div>
