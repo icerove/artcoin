@@ -6,7 +6,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin-top: 5%;
   margin-bottom: 3%;
   text-align: center;
@@ -16,6 +16,10 @@ header {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 3%;
+}
+
+.head-item {
+  text-decoration: none !important;
 }
 
 .art-card,
@@ -39,4 +43,19 @@ button {
 
 button:hover {
   background-color: #bdb8fa;
+}
+
+.card-header {
+  background-color: #d4d7fc !important;
+  padding: 5px 15px;
+  border:none;
+}
+
+.title-font {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.price {
+  background-color: #e1e3fa;
 }

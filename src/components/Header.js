@@ -7,7 +7,7 @@ const Header = ({currentUser, signIn, signOut}) => {
         return <div style={{width: '110%'}}>
             <Row>
                 <Col>
-                    <header>ART Coin Exchange</header>
+                    <p>ARTIFICIAL EXCHANGE</p>
                 </Col>
                 <Col>
                     <NavLink exact to="/">Home</NavLink>
@@ -20,31 +20,30 @@ const Header = ({currentUser, signIn, signOut}) => {
             </Row>
         </div>
     }
-    return <div>
-        <Row noGutters>
+    return (
+        <Row noGutters className='mb-5'>
             <Col>
-                <header>ART Coin Exchange</header>
+                <NavLink exact to="/" className="head-item"><p>ARTIFICIAL EXCHANGE</p></NavLink>
             </Col>
-            <Col>
-                <NavLink exact to="/">Home</NavLink>
+            <Col className="p-2">
+                <NavLink exact to="/wallet" className="head-item">Wallet</NavLink>
             </Col>
-            <Col>
-                <NavLink exact to="/stake">Stake</NavLink>
+            <Col className="p-2">
+                <NavLink exact to="/trade" className="head-item">Trade</NavLink>
             </Col>
-            <Col>
-                <NavLink exact to="/trade">Trade</NavLink>
+            <Col className="p-2">
+                <NavLink exact to="/stake" className="head-item">Stake</NavLink>
             </Col>
-            {/* <Col>
-                <NavLink exact to="/questions">FAQs</NavLink>
+            <Col className="p-2">
+                <NavLink exact to="/faqs" className="head-item">FAQs</NavLink>
             </Col>
-            <Col>
-                <NavLink exact to="/docs">DOCs</NavLink>
-            </Col> */}
-            <Col onClick={signOut}>
+            <Col className="p-2">
+                <NavLink exact to="/docs" className="head-item">DOCs</NavLink>
+            </Col>
+            <Col onClick={signOut} className="p-2">
                 <button onClick={signOut}>Sign Out</button>
             </Col>
-        </Row>
-    </div>
+        </Row>)
 }
 
 export default Header

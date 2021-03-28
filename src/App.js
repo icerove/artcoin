@@ -5,7 +5,11 @@ import { Route, Switch } from "react-router-dom";
 
 import ARTCard from './components/ARTCard'
 import TradeCard from './components/TradeCard'
+import Wallet from './components/Wallet'
+import FAQ from './components/FAQ'
+import Docs from './components/Docs'
 import Dash from './components/Dash'
+
 import Header from './components/Header'
  
 import './App.css'
@@ -39,7 +43,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
     </Container>
     )
   }
-  console.log(currentUser)
+
   if(!currentUser) {
     return (
       <Container>
@@ -62,6 +66,10 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           render={() => <ARTCard contract={contract} currentUser={currentUser} ausdContract={ausdContract} />} />
         <Route exact path="/trade" 
           render={() => <TradeCard contract={contract} accountId={currentUser.accountId}/>}/>
+        <Route exact path="/wallet" 
+          render={() => <Wallet contract={contract} accountId={currentUser.accountId} ausdContract={ausdContract}/>}/>
+        <Route exact path='/faqs' component={FAQ} />
+        <Route exact path='/docs' component={Docs} />
         <Route
           render={() => (
             <h1>

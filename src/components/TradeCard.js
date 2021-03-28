@@ -46,6 +46,7 @@ const TradeCard = ({contract, accountId}) => {
     useEffect(() => {
         loadCurrentAssetPrice()
         loadCurrentAssetBalance()
+
         setInterval(() => {
             loadCurrentAssetPrice() 
         }, 300000)
@@ -94,9 +95,9 @@ const TradeCard = ({contract, accountId}) => {
     }
 
     return <div className="trade-card">
-    {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}    
+    {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}  
     <Row noGutters className="p-2" style={{background: '#fff'}}>
-       <Col>BUY/SELL</Col> 
+       <Col className="p-2 title-font">BUY/SELL</Col> 
        <Col>
             <Form.Group controlId="formSelect">
                 <Form.Control 
@@ -106,7 +107,6 @@ const TradeCard = ({contract, accountId}) => {
                         if (event) {
                             const value = event.target !== null ? event.target.value : "";
                             setCurrentAsset(value)
-                            loadAssetBalance(value)
                             loadAssetPrice(value)
                         }
                     }}>
@@ -115,9 +115,9 @@ const TradeCard = ({contract, accountId}) => {
             </Form.Group>
        </Col>
     </Row>
-    <Accordion>
+    <Accordion defaultActiveKey='0'>
         <Card>
-            <Card.Header>
+            <Card.Header className="title-font">
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                     BUY
                 </Accordion.Toggle>
@@ -177,7 +177,7 @@ const TradeCard = ({contract, accountId}) => {
             </Accordion.Collapse>
         </Card>
         <Card>
-            <Card.Header>
+            <Card.Header className="title-font">
             <Accordion.Toggle as={Card.Header} eventKey="1">
                 SELL
             </Accordion.Toggle>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Row, Col, Button, Form, InputGroup, FormControl, Modal, Spinner } from 'react-bootstrap';
+import { Row, Col, Button, Form, InputGroup, FormControl, Modal, Spinner, Card } from 'react-bootstrap';
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from 'bn.js'
 import AlertBanner from './Alerts'
@@ -71,6 +71,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
 
     // deposit
     const [deposit, setDeposit] = useState('10')
+    const [deposit_ausd, setDepositAUSD] = useState('10')
 
     const buyArtWithNear = (event) => {
         event.preventDefault()
@@ -167,29 +168,36 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
     } 
 
     return (<div className="art-card">
-    {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}    
-    <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
-        <Col>NEAR Wallet : {currentUser.accountId} </Col>
-        <Col>NEAR Balance: {nearBalance} Ⓝ</Col>
-    </Row>
-    {currentUser !== undefined ?
-    <> 
-        <Row noGutters style={{fontSize:"12px"}} className="p-2 mb-2">
-            - If you want staking ART, start with "Buy ART with NEAR token"
-            For every $5 value of ART staked, you will mint 1 aUSD. In reverse, after burning 1 aUSD, you will get $5 value of ART back.
-            In future, staking reward and governance will be enabled for ART stakers.
-        </Row>
-        <Row noGutters style={{fontSize:"12px"}} className="p-2 mb-2">
-            - If you just want trading with stable coin, start with "Buy aUSD with NEAR token"
-        </Row>
+        {alert && <AlertBanner error={error} setError={setError} setAlert={setAlert} />}  
+
+        <Row noGutters className="mb-2">
+            <Col>
+            <Card className="price">
+                <Card.Body>
+                    <Card.Title>ART Price</Card.Title>
+                    <Card.Text>
+                    {maybeLoad(artPrice, (a) => (Number(a)/10**8).toFixed(2))} $
+                    </Card.Text>
+                </Card.Body>
+            </Card>   
+            </Col>
+            <Col>
+            <Card className="price">
+                <Card.Body>
+                    <Card.Title>NEAR Price</Card.Title>
+                    <Card.Text>
+                    {maybeLoad(nearPrice, (n) => (Number(n)/10**8).toFixed(2))} $
+                    </Card.Text>
+                </Card.Body>
+            </Card>    
+            </Col>
+        </Row>  
+
         <Row noGutters className="p-2 mb-2" style={{background: '#fff'}}>
-            <Col>
-                ART Price: {maybeLoad(artPrice, (a) => (Number(a)/10**8).toFixed(2))} $
-            </Col>
-            <Col>
-                NEAR Price: {maybeLoad(nearPrice, (n) => (Number(n)/10**8).toFixed(2))} $
-            </Col>
+            <Col>NEAR Wallet : {currentUser.accountId} </Col>
+            <Col>NEAR Balance: {nearBalance} Ⓝ</Col>
         </Row>
+
         <Row noGutters className="p-2 mb-2">
             <Col>
                 ART Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '} <br />
@@ -247,6 +255,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                 </Modal>
             </Col>
         </Row>
+
         <Row noGutters className="p-2 mb-2">
             <Col>
                 <Form style={{width: "100%"}} onSubmit={buyArtWithNear}>
@@ -273,6 +282,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                 </Form>
             </Col>
         </Row>
+
         <Row noGutters className="p-2" style={{background: '#fff'}}>
             <Col>
                 aUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))} $
@@ -288,11 +298,11 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                             <InputGroup.Text>aUSD Amount</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl  
-                                value={deposit}
+                                value={deposit_ausd}
                                 onChange={(event) => {
                                     if (event) {
                                         const value = event.target !== null ? event.target.value : "";
-                                        setDeposit(value)
+                                        setDepositAUSD(value)
                                     }
                                 }} />
                         </InputGroup>
@@ -304,6 +314,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                 </Form>
             </Col>
         </Row>
+        
         <Row noGutters className="p-2 mb-2">
             <Form style={{width: "100%"}} onSubmit={stakeAndmint}>
                 <Form.Row className="align-items-center">
@@ -353,10 +364,6 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                 </Form.Row>
             </Form>
         </Row>
-    </>
-    : <Row noGutters className="p-5">
-        Welcome to ART Wallet, please login with your near account to start
-        </Row>}
     </div>)
 }
 
