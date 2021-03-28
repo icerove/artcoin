@@ -27,7 +27,7 @@ const Account = ({contract, accountId, ausdContract}) => {
         let aEUR =await loadAssetBalance('aEUR')
         setAssetB({aBTC, aNEAR, aGOLD, aSPY, aEUR})
     }, [])
-    console.log(assetB)
+    
     return <div className="trade-card">
     <Table striped bordered hover>
         <thead>

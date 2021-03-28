@@ -9,6 +9,7 @@ import Wallet from './components/Wallet'
 import FAQ from './components/FAQ'
 import Docs from './components/Docs'
 import Dash from './components/Dash'
+import Markets from './components/Markets'
 
 import Header from './components/Header'
  
@@ -70,6 +71,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           render={() => <Wallet contract={contract} accountId={currentUser.accountId} ausdContract={ausdContract}/>}/>
         <Route exact path='/faqs' component={FAQ} />
         <Route exact path='/docs' component={Docs} />
+        <Route exact path='/markets' component={Markets} />
         <Route
           render={() => (
             <h1>

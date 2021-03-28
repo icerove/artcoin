@@ -26,6 +26,9 @@ const Header = ({currentUser, signIn, signOut}) => {
                 <NavLink exact to="/" className="head-item"><p>ARTIFICIAL EXCHANGE</p></NavLink>
             </Col>
             <Col className="p-2">
+                <NavLink exact to="/markets" className="head-item">Markets</NavLink>
+            </Col>
+            <Col className="p-2">
                 <NavLink exact to="/wallet" className="head-item">Wallet</NavLink>
             </Col>
             <Col className="p-2">

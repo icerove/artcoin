@@ -59,3 +59,18 @@ button:hover {
 .price {
   background-color: #e1e3fa;
 }
+
+.dash-charts {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5%;
+  justify-content: space-between;
+}
+
+.box {
+  width: 46%;
+  background-color: white;
+  margin: 2%;
+  padding:2%;
+  box-shadow: rgba(188, 99, 255, 0.153) 0px 4px 11px;
+}
