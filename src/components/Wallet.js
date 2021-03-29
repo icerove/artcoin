@@ -1,14 +1,14 @@
-import React, {useState, useEffect, useCallback} from 'react'
-import { Row, Card, Table, Col } from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import { Table } from 'react-bootstrap'
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 
 const Account = ({contract, accountId, ausdContract}) => {
 
     const [assetB, setAssetB] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
 
-    const loadAssetBalance = useCallback(async (a) => {
+    const loadAssetBalance = async (a) => {
         return await contract.get_asset_balance({account_id: accountId, asset: a})
-    }) 
+    }
 
     const [aUSDBalnce, setAusdBalance] = useState('')
 
@@ -17,15 +17,17 @@ const Account = ({contract, accountId, ausdContract}) => {
         .then((ausd) => setAusdBalance(ausd))
     }
 
-    useEffect(async () => {
+    useEffect(() => {
+        async function loadBalance() {
+            let aBTC = await loadAssetBalance('aBTC')
+            let aNEAR = await loadAssetBalance('aNEAR')
+            let aGOLD = await loadAssetBalance('aGOLD')
+            let aSPY = await loadAssetBalance('aSPY')
+            let aEUR =await loadAssetBalance('aEUR')
+            setAssetB({aBTC, aNEAR, aGOLD, aSPY, aEUR})
+        }
         loadAUSDBalance()
-
-        let aBTC = await loadAssetBalance('aBTC')
-        let aNEAR = await loadAssetBalance('aNEAR')
-        let aGOLD = await loadAssetBalance('aGOLD')
-        let aSPY = await loadAssetBalance('aSPY')
-        let aEUR =await loadAssetBalance('aEUR')
-        setAssetB({aBTC, aNEAR, aGOLD, aSPY, aEUR})
+        loadBalance()
     }, [])
     
     return <div className="trade-card">

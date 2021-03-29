@@ -16,7 +16,7 @@ const TradeCard = ({contract, accountId}) => {
     const [sellLoading, setSellLoading] = useState('')
 
     const maybeLoad = (state, displayFun) => {
-        if (state == 'l') {
+        if (state === 'l') {
            return <Spinner       size="sm"           animation="border" />
         } else {
             return displayFun(state)

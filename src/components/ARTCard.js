@@ -67,7 +67,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
             loadAUSDBalance()
             loadNearPrice() 
         }, 300000)
-    }, [])
+    })
 
     // deposit
     const [deposit, setDeposit] = useState('10')
@@ -113,10 +113,6 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
     // stake
     const [stakeAmount, setStake] = useState('1000')
 
-    const sleep = (time) => {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-
     const stakeAndmint = async (event) => {
         event.preventDefault()
         setArtUnstakedBalance('l')
@@ -160,8 +156,8 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
     const [show, setShow] = useState(false);
 
     const maybeLoad = (state, displayFun) => {
-        if (state == 'l') {
-           return <Spinner       size="sm"           animation="border" />
+        if (state === 'l') {
+           return <Spinner size="sm" animation="border" />
         } else {
             return displayFun(state)
         }

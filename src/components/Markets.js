@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tabs, Tab, Row, Form } from 'react-bootstrap'
+import { Tabs, Tab, Row, Form, Spinner } from 'react-bootstrap'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 
@@ -64,8 +64,11 @@ const Markets = () => {
         return array.map((arr) => arr.time)
     }
 
-    useEffect(async () => {
+    useEffect(() => {
+      async function fetchData() {
         await getPriceList()
+      }
+      fetchData()
     }, [])
 
     const getOption = (title, data, date) => {
@@ -130,13 +133,12 @@ const Markets = () => {
   };
     
     const Charts = ({index}) => {
-      console.log(index)
       return  (
         <Tabs defaultActiveKey="daily" id="price">
           <Tab eventKey="daily" title="1 Day">
             <ReactEcharts
               option={getOption( index + ' / aUSD', getPrice(day[index]), getDate(day[index]))}
-              style={{width: '100%', height: '780px'}}
+              style={{width: '100%', height: '500px'}}
             />
           </Tab>
           <Tab eventKey="week" title="1 Week">
@@ -181,10 +183,15 @@ const Markets = () => {
                 </Form.Control>
             </Form.Group>
         </Row>
-        {day.art !== null &&
+        {day.art !== null ?
         <div>
           <Charts index={currentAsset} />
         </div>
+        : <Row className="m-2 p-2">
+            <Spinner animation="border" />
+            <Spinner animation="border" />
+            <Spinner animation="border" />
+          </Row>
         }    
         </>
     )

@@ -25,8 +25,11 @@ const Dash = () => {
         setDay(dailyPriceList)
     }
 
-    useEffect(async () => {
+    useEffect(() => {
+      async function fetchData() {
         await getPriceList()
+      }
+      fetchData()
     }, [])
 
     const getPrice = (array) => {
