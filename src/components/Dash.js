@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 
+const API_URL = 'https://api.artcoin.network/prices'
 
 const Dash = () => {
     const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
@@ -11,7 +12,7 @@ const Dash = () => {
         let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
 
         for(const p in dailyPriceList){
-            let res3 = await fetch(`http://35.236.75.242:3000/prices/${p}/1D`, {
+            let res3 = await fetch(`${API_URL}/${p}/1D`, {
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'

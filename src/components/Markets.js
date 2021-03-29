@@ -4,6 +4,8 @@ import { Tabs, Tab, Row, Form, Spinner } from 'react-bootstrap'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 
+const API_URL = 'https://api.artcoin.network/prices'
+
 const Markets = () => {
     const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
     const [month, setMonth] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
@@ -16,7 +18,7 @@ const Markets = () => {
         let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
 
         for(const p in monthlyPriceList){
-            let res1 = await fetch(`http://35.236.75.242:3000/prices/${p}/1M`, {
+            let res1 = await fetch(`${API_URL}/${p}/1M`, {
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
@@ -28,7 +30,7 @@ const Markets = () => {
         }
 
         for(const p in weeklyPriceList){
-            let res2 = await fetch(`http://35.236.75.242:3000/prices/${p}/1W`, {
+            let res2 = await fetch(`${API_URL}/${p}/1W`, {
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
@@ -40,7 +42,7 @@ const Markets = () => {
         }
 
         for(const p in dailyPriceList) {
-            let res3 = await fetch(`http://35.236.75.242:3000/prices/${p}/1D`, {
+            let res3 = await fetch(`${API_URL}/${p}/1D`, {
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
