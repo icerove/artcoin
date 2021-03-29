@@ -2,22 +2,10 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 
-const Header = ({currentUser, signIn, signOut}) => {
+const Header = ({currentUser, signOut}) => {
     if (!currentUser) {
-        return <div style={{width: '110%'}}>
-            <Row>
-                <Col>
-                    <p>ARTIFICIAL EXCHANGE</p>
-                </Col>
-                <Col>
-                    <NavLink exact to="/">Home</NavLink>
-                </Col>
-                <Col>
-                    <button onClick={signIn}>
-                        Sign In
-                    </button>
-                </Col>
-            </Row>
+        return <div style={{textAlign: 'center'}}>
+                ARTIFICIAL EXCHANGE
         </div>
     }
     return (
