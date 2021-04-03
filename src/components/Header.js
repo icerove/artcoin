@@ -1,17 +1,24 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
+import Logo from '../assets/logo192.png'
 
 const Header = ({currentUser, signOut}) => {
     if (!currentUser) {
         return <div style={{textAlign: 'center'}}>
-                ARTIFICIAL EXCHANGE
+                ART Coin Exchange
         </div>
     }
+    console.log()
     return (
         <Row noGutters className='mb-5'>
-            <Col>
-                <NavLink exact to="/" className="head-item"><p>ARTIFICIAL EXCHANGE</p></NavLink>
+            <Col className='pr-2'>
+                <NavLink exact to="/" className="head-item">
+                    <div style={{display: 'flex'}}>
+                        <div><img className="logo" src={Logo} alt=""/></div>
+                        <div>ART Coin Exchange</div>
+                    </div>
+                </NavLink>
             </Col>
             <Col className="p-2">
                 <NavLink exact to="/markets" className="head-item">Markets</NavLink>

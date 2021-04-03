@@ -12,7 +12,9 @@ import Dash from './components/Dash'
 import Markets from './components/Markets'
 
 import Header from './components/Header'
- 
+
+import Logo from './assets/logo192.png'
+
 import './App.css'
 
 const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
@@ -53,6 +55,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           Welcome, please Sign in with NEAR wallet to start journey!
         </div>
         <button onClick={signIn}>Sign In</button>
+        <div style={{margin: '20%'}}><img src={Logo} alt=""/></div>
       </Container>
     )
   }

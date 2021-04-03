@@ -6,7 +6,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 800px;
+  max-width: 880px;
   margin-top: 5%;
   margin-bottom: 3%;
   text-align: center;
@@ -85,4 +85,11 @@ h2 {
 
 .left {
   text-align: left;
+}
+
+.logo {
+  width: 50px;
+  display: block;
+  float: left;
+  margin-right: 5px;
 }
