@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
-    "deploy": "env PUBLIC_URL='https://artcoin.network/' gh-pages -d build",
+    "deploy": "env REACT_APP_PUBLIC_URL='https://artcoin.network/' gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
