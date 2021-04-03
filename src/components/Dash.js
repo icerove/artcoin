@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 
-const API_URL = 'https://api.artcoin.network/prices'
+export const API_URL = 'https://api.artcoin.network/prices'
+export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
 
 const Dash = () => {
-    const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
     const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
 
     const getPriceList = async () => {
@@ -103,9 +103,9 @@ const Dash = () => {
     };
 
     const Charts = ({index}) => {
-        if (day[coinList[index]]) {
+        if (day[index]) {
             return (<ReactEcharts
-              option={getOption( coinList[index] + ' / aUSD', getPrice(day[coinList[index]]), getDate(day[coinList[index]]))}
+              option={getOption( index + ' / aUSD', getPrice(day[index]), getDate(day[index]))}
               style={{width: '100%', height: '200px'}}
         />)
         }
@@ -115,8 +115,7 @@ const Dash = () => {
     return <div>
         <h3 style={{padding: '5px 5%'}}> aUSD, the first decentralized native stable coin on NEAR and a defi asset exchange like Synthetix, that can trade virtual assets like BTC, Gold, EUR and S&P500 Index </h3>
         <div className="dash-charts">
-            {coinList.map((_,i) => <div className="box"><Charts index={i} /></div>)}
-            
+            {coinList.map((coin) => <div className="box"><Charts index={coin} /></div>)}
         </div>
     </div>
 }

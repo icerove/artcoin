@@ -4,10 +4,9 @@ import { Tabs, Tab, Row, Form, Spinner } from 'react-bootstrap'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 
-const API_URL = 'https://api.artcoin.network/prices'
+import {API_URL, coinList } from './Dash'
 
 const Markets = () => {
-    const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
     const [month, setMonth] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
     const [week, setWeek] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
     const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})

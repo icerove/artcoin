@@ -74,7 +74,7 @@ async function initContract() {
 window.nearInitPromise = initContract()
   .then(({ contract, currentUser, nearConfig, walletConnection, ausdContract }) => {
     ReactDOM.render(
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL}>
       <App
         ausdContract={ausdContract}
         contract={contract}
