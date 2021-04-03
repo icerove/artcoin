@@ -49,10 +49,10 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
     return (
       <Container>
         <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
-        <Row noGutters style={{height: '50px'}}>
-          Welcome to ART coin, please log in with NEAR wallet to start journey!
-        </Row>
-        <button onClick={signIn}>Log In</button>
+        <div style={{height: '50px',textAlign: 'center'}}>
+          Welcome, please Sign in with NEAR wallet to start journey!
+        </div>
+        <button onClick={signIn}>Sign In</button>
       </Container>
     )
   }

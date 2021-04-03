@@ -23,10 +23,10 @@ header {
 }
 
 .art-card,
-.trade-card{
+.trade-card {
   width: 100%;
   text-align: left;
-  background-color: #f2f1f6; 
+  background-color: #f2f1f6;
 }
 
 .btn {
@@ -48,7 +48,7 @@ button:hover {
 .card-header {
   background-color: #d4d7fc !important;
   padding: 5px 15px;
-  border:none;
+  border: none;
 }
 
 .title-font {
@@ -71,6 +71,18 @@ button:hover {
   width: 46%;
   background-color: white;
   margin: 2%;
-  padding:2%;
+  padding: 2%;
   box-shadow: rgba(188, 99, 255, 0.153) 0px 4px 11px;
+}
+
+h4 {
+  text-align: left;
+}
+
+h2 {
+  margin-bottom: 2em;
+}
+
+.left {
+  text-align: left;
 }
