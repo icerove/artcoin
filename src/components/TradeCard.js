@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Row, Col, Button, Form, FormControl, InputGroup, Accordion, Card, Spinner } from 'react-bootstrap'
 import { formatNearAmount } from "near-api-js/lib/utils/format"
 import AlertBanner from './Alerts'
+import tokenIcon from './tokenIcon'
 
 const GAS = 300000000000000
 
@@ -128,7 +129,7 @@ const TradeCard = ({contract, accountId}) => {
                         onSubmit={buyAssetWithAusd} 
                         style={{width: '100%'}}>
                         <Form.Group controlId="buyAsset">
-                            <Form.Label>BUY {currentAsset}: </Form.Label>
+                            <Form.Label>BUY <img src={tokenIcon[currentAsset]} alt='icon' className="icon"/>{currentAsset}: </Form.Label>
                             <InputGroup className="mb-2" >
                                 <InputGroup.Prepend>
                                     <InputGroup.Text>{currentAsset}</InputGroup.Text>
@@ -146,7 +147,7 @@ const TradeCard = ({contract, accountId}) => {
                         </Form.Group>
 
                         <Form.Group controlId="fromausd">
-                            <Form.Label>with aUSD: </Form.Label>
+                            <Form.Label>with <img src={tokenIcon.aUSD} alt='icon' className="icon"/>aUSD: </Form.Label>
                             <InputGroup className="mb-2">
                                 <InputGroup.Prepend>
                                 <InputGroup.Text>aUSD</InputGroup.Text>
@@ -188,7 +189,7 @@ const TradeCard = ({contract, accountId}) => {
                     onSubmit={sellAssettoAusd}
                     style={{width: '100%'}}>
                     <Form.Group controlId="sellAsset">
-                        <Form.Label>SELL {currentAsset}: </Form.Label>
+                        <Form.Label>SELL <img src={tokenIcon[currentAsset]} alt='icon' className="icon"/>{currentAsset}: </Form.Label>
                         <InputGroup className="mb-2" >
                             <InputGroup.Prepend>
                             <InputGroup.Text>{currentAsset}</InputGroup.Text>
@@ -206,7 +207,7 @@ const TradeCard = ({contract, accountId}) => {
                     </Form.Group>
 
                     <Form.Group controlId="toausd">
-                        <Form.Label>to aUSD: </Form.Label>
+                        <Form.Label>to <img src={tokenIcon.aUSD} alt='icon' className="icon"/>aUSD: </Form.Label>
                         <InputGroup className="mb-2">
                             <InputGroup.Prepend>
                             <InputGroup.Text>aUSD</InputGroup.Text>

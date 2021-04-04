@@ -158,10 +158,9 @@ const Markets = () => {
     );
     }
 
-
     const assetItems = coinList.map((k) =>
         <option key={k}>
-        {k}
+            {k}
         </option>
     )
 

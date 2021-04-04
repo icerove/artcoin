@@ -3,6 +3,7 @@ import { Row, Col, Button, Form, InputGroup, FormControl, Modal, Spinner, Card }
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from 'bn.js'
 import AlertBanner from './Alerts'
+import tokenIcon from './tokenIcon'
 
 const GAS = 300000000000000
 const UNIT = new BN('1000000000000000000000000')
@@ -170,7 +171,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
             <Col>
             <Card className="price">
                 <Card.Body>
-                    <Card.Title>ART Price</Card.Title>
+                    <Card.Title><img src={tokenIcon.art} alt='icon' className="icon"/>ART Price</Card.Title>
                     <Card.Text>
                     {maybeLoad(artPrice, (a) => (Number(a)/10**8).toFixed(2))} $
                     </Card.Text>
@@ -180,7 +181,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
             <Col>
             <Card className="price">
                 <Card.Body>
-                    <Card.Title>NEAR Price</Card.Title>
+                    <Card.Title><img src={tokenIcon.aNEAR} alt='icon' className="icon"/>aNEAR Price</Card.Title>
                     <Card.Text>
                     {maybeLoad(nearPrice, (n) => (Number(n)/10**8).toFixed(2))} $
                     </Card.Text>
@@ -259,7 +260,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                         <Col className="mx-1">
                         <InputGroup>
                             <InputGroup.Prepend>
-                            <InputGroup.Text>ART Amount</InputGroup.Text>
+                            <InputGroup.Text>ART</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl  
                                 value={deposit}
@@ -291,7 +292,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                         <Col className="mx-1">
                         <InputGroup>
                             <InputGroup.Prepend>
-                            <InputGroup.Text>aUSD Amount</InputGroup.Text>
+                            <InputGroup.Text>aUSD</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl  
                                 value={deposit_ausd}
@@ -317,7 +318,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>ART Amount</InputGroup.Text>
+                        <InputGroup.Text>ART</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl  
                             value={stakeAmount}
@@ -341,7 +342,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>ART Amount</InputGroup.Text>
+                        <InputGroup.Text>ART</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl 
                             value={unstakeAmount}
