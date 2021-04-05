@@ -171,7 +171,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
             <Col>
             <Card className="price">
                 <Card.Body>
-                    <Card.Title><img src={tokenIcon.art} alt='icon' className="icon"/>ART Price</Card.Title>
+                    <Card.Title><img src={tokenIcon.art} alt='icon' className="icon"/>art Price</Card.Title>
                     <Card.Text>
                     {maybeLoad(artPrice, (a) => (Number(a)/10**8).toFixed(2))} $
                     </Card.Text>
@@ -197,15 +197,15 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
 
         <Row noGutters className="p-2 mb-2">
             <Col>
-                ART Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '} <br />
-                ART Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                art Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '} <br />
+                art Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
             </Col>
             <Col>     
-                ART Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                art Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
                 <button onClick={() => setShow(true)}>Transfer</button>
                 <Modal show={show} onHide={() =>setShow(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Transfer ART to your hoomie</Modal.Title>
+                        <Modal.Title>Transfer art to your hoomie</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form style={{width: "100%"}} onSubmit={transferArt}>
@@ -260,7 +260,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                         <Col className="mx-1">
                         <InputGroup>
                             <InputGroup.Prepend>
-                            <InputGroup.Text>ART</InputGroup.Text>
+                            <InputGroup.Text>art</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl  
                                 value={deposit}
@@ -273,7 +273,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                         </InputGroup>
                         </Col>
                         <Col className="mx-1" style={{textAlign: 'end'}}>
-                        <Button type="submit">Buy ART with NEAR token</Button>
+                        <Button type="submit">Buy art with NEAR token</Button>
                         </Col>
                     </Form.Row>
                 </Form>
@@ -318,7 +318,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>ART</InputGroup.Text>
+                        <InputGroup.Text>art</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl  
                             value={stakeAmount}
@@ -342,7 +342,7 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
                     <Col className="mx-1">
                     <InputGroup>
                         <InputGroup.Prepend>
-                        <InputGroup.Text>ART</InputGroup.Text>
+                        <InputGroup.Text>art</InputGroup.Text>
                         </InputGroup.Prepend>
                         <FormControl 
                             value={unstakeAmount}

@@ -21,7 +21,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   const [isLoading, setLoading] = useState(false);
 
   const signIn = useCallback(() => {
-    wallet.requestSignIn(nearConfig.contractName, "NEAR ART Coin");
+    wallet.requestSignIn(nearConfig.contractName, "NEAR art Coin");
   }, [wallet, nearConfig]);
 
   const signOut = useCallback(() => {
@@ -34,7 +34,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   if (isLoading) {
     return (
       <Container>
-      <header>ART Coin Exchange</header>
+      <header>art Coin Exchange</header>
       <div>
       <Spinner animation="border" size="sm" variant="warning"/>
       <Spinner animation="border" size="sm" variant="warning"/>

@@ -6,7 +6,7 @@ import Logo from '../assets/logo192.png'
 const Header = ({currentUser, signOut}) => {
     if (!currentUser) {
         return <div style={{textAlign: 'center'}}>
-                ART Coin Exchange
+                art Coin Exchange
         </div>
     }
     console.log()
@@ -16,7 +16,7 @@ const Header = ({currentUser, signOut}) => {
                 <NavLink exact to="/" className="head-item">
                     <div style={{display: 'flex'}}>
                         <div><img className="logo" src={Logo} alt=""/></div>
-                        <div>ART Coin Exchange</div>
+                        <div>art Coin Exchange</div>
                     </div>
                 </NavLink>
             </Col>
