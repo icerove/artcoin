@@ -103,6 +103,9 @@ const Markets = () => {
               formatter: function (value) {
                   return value > 1000 ? value/1000 + 'k' : value
               }
+            },
+            min: function (value) {
+              return value.min - value.min * 0.02;
             }
           },
         ],
