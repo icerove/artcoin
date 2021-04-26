@@ -97,3 +97,7 @@ h2 {
 .icon {
   margin-right: 5px;
 }
+
+.docs {
+  text-align: start;
+}

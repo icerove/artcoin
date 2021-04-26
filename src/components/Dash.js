@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
+import { Spinner } from 'react-bootstrap'
 
 export const API_URL = 'https://api.artcoin.network/prices'
 export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
@@ -112,7 +113,8 @@ const Dash = () => {
               style={{width: '100%', height: '200px'}}
         />)
         }
-        return null
+        return <Spinner animation="border" />
+
     }
 
     return <div>

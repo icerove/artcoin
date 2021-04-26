@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Spinner, Row } from 'react-bootstrap'
+import { Container, Spinner } from 'react-bootstrap'
 import { Route, Switch } from "react-router-dom";
 
 import ARTCard from './components/ARTCard'

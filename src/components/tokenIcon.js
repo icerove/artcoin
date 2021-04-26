@@ -7,7 +7,7 @@ import aNEAR from '../assets/aNEAR.png'
 import aSPY from '../assets/aSPY.png'
 import aUSD from '../assets/aUSD.png'
 
-export default {
+const tokenIcon = {
     art,
     aBTC,
     aETH,
@@ -17,3 +17,5 @@ export default {
     aSPY,
     aUSD
 }
+
+export default tokenIcon

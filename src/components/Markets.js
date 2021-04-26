@@ -191,9 +191,9 @@ const Markets = () => {
           <Charts index={currentAsset} />
         </div>
         : <Row className="m-2 p-2">
-            <Spinner animation="border" />
-            <Spinner animation="border" />
-            <Spinner animation="border" />
+            <Spinner animation="border" style={{fontSize: "3rem", width: '3rem', height: '3rem'}}/>
+            <Spinner animation="border" style={{fontSize: "3rem", width: '3rem', height: '3rem'}}/>
+            <Spinner animation="border" style={{fontSize: "3rem", width: '3rem', height: '3rem'}}/>
           </Row>
         }    
         </>

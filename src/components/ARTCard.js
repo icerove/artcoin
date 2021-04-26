@@ -70,6 +70,17 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
         }, 300000)
     })
 
+    // refresh staking reward
+    const refreshStakingReward = () => {
+        return contract.refresh_reward({}, GAS)
+        .then((res) => {
+            if(res === true) {
+                loadStakedBalance()
+            }
+            return
+        })
+    }
+
     // deposit
     const [deposit, setDeposit] = useState('10')
     const [deposit_ausd, setDepositAUSD] = useState('10')
@@ -198,11 +209,16 @@ const ARTCard = ({currentUser, contract, ausdContract}) => {
         <Row noGutters className="p-2 mb-2">
             <Col>
                 art Total Balace: {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '} <br />
-                art Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                <Row noGutters>
+                    art Staked Balace: {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
+                    (~ +{maybeLoad(artStakedBalance, (a) =>(0.000261 * (new BN(artStakedBalance).div(UNIT).toNumber())).toFixed(4))}/day ⓐ) 
+                    <Button onClick={refreshStakingReward}>Refresh Staked Reward</Button>
+                </Row>
+                
             </Col>
             <Col>     
-                art Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ
-                <button onClick={() => setShow(true)}>Transfer</button>
+                art Unstaked Balace: {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ {' '}
+                <Button onClick={() => setShow(true)}>Transfer</Button>
                 <Modal show={show} onHide={() =>setShow(false)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Transfer art to your hoomie</Modal.Title>
