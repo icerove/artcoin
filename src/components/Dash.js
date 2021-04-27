@@ -42,7 +42,7 @@ const Dash = () => {
     }
 
     const getDate = (array) => {
-        return array.map((arr) => arr.time.slice(11,19))
+        return array.map((arr) => new Date(arr.time).toLocaleTimeString('en-US'))
     }
 
     const getOption = (title, data, date) => {
@@ -61,7 +61,7 @@ const Dash = () => {
             {
               type: "category",
               boundaryGap: false,
-              data: date,
+              data: date
             },
           ],
           yAxis: [

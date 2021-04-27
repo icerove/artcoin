@@ -67,7 +67,7 @@ const Markets = () => {
     }
 
     const getDate = (array) => {
-        return array.map((arr) => arr.time)
+        return array.map((arr) => new Date(arr.time).toLocaleTimeString('en-US'))
     }
 
     useEffect(() => {
