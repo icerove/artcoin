@@ -4,13 +4,16 @@ import * as echarts from "echarts";
 import { Spinner } from 'react-bootstrap'
 
 export const API_URL = 'https://api.artcoin.network/prices'
-export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 'aEUR']
+export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 
+                        'aEUR', 'aGOOG', 'aTSLA', 'aNFLX', 'aAAPL', 'aFB']
 
 const Dash = () => {
-    const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
+    const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, 
+      aGOLD: null, aSPY: null, aEUR: null, aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null })
 
     const getPriceList = async () => {
-        let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
+        let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null, 
+          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
 
         for(const p in dailyPriceList){
             let res3 = await fetch(`${API_URL}/${p}/1D`, {

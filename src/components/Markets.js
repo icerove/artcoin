@@ -7,14 +7,19 @@ import * as echarts from "echarts";
 import {API_URL, coinList } from './Dash'
 
 const Markets = () => {
-    const [month, setMonth] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
-    const [week, setWeek] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
-    const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null})
+    let initialState = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null,
+      aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
+    const [month, setMonth] = useState(initialState)
+    const [week, setWeek] = useState(initialState)
+    const [day, setDay] = useState(initialState)
 
     const getPriceList = async () => {
-        let monthlyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
-        let weeklyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
-        let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null}
+        let monthlyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null,
+          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
+        let weeklyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null,
+          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
+        let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null,
+          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
 
         for(const p in monthlyPriceList){
             let res1 = await fetch(`${API_URL}/${p}/1M`, {

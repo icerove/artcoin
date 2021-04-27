@@ -6,6 +6,11 @@ import aGOLD from '../assets/aGOLD.png'
 import aNEAR from '../assets/aNEAR.png'
 import aSPY from '../assets/aSPY.png'
 import aUSD from '../assets/aUSD.png'
+import aGOOG from '../assets/aGOOG.png'
+import aAAPL from '../assets/aAAPL.png'
+import aFB from '../assets/aFB.png'
+import aNFLX from '../assets/aNFLX.png'
+import aTSLA from "../assets/aTSLA.png";
 
 const tokenIcon = {
     art,
@@ -15,7 +20,12 @@ const tokenIcon = {
     aGOLD,
     aNEAR,
     aSPY,
-    aUSD
+    aUSD,
+    aGOOG,
+    aAAPL,
+    aFB,
+    aNFLX,
+    aTSLA
 }
 
 export default tokenIcon
