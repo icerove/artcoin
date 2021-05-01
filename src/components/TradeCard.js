@@ -8,8 +8,10 @@ const GAS = 300000000000000
 
 const TradeCard = ({contract, accountId}) => {
 
-    const [assetP, setAssetP] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
-    const [assetB, setAssetB] = useState({'aNEAR':'0', 'aBTC':'0', 'aGOLD':'0', 'aSPY':'0', 'aEUR':'0'})
+    const [assetP, setAssetP] = useState({art: '0', aNEAR: '0', aBTC: '0', 
+        aGOLD: '0', aSPY: '0', aEUR: '0', aGOOG: '0', aTSLA: '0', aNFLX: '0', aAAPL: '0', aFB: '0' })
+    const [assetB, setAssetB] = useState({art: '0', aNEAR: '0', aBTC: '0', 
+        aGOLD: '0', aSPY: '0', aEUR: '0', aGOOG: '0', aTSLA: '0', aNFLX: '0', aAAPL: '0', aFB: '0' })
     const [currentAsset, setCurrentAsset] = useState("aBTC")
 
     // Button text, '' means show text, 'l' means show spinner

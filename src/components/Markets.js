@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tabs, Tab, Row, Form, Spinner } from 'react-bootstrap'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
-
+import moment from 'moment'
 import {API_URL, coinList } from './Dash'
 
 const Markets = () => {
@@ -67,7 +67,7 @@ const Markets = () => {
     }
 
     const getDate = (array) => {
-        return array.map((arr) => new Date(arr.time).toLocaleTimeString('en-US'))
+        return array.map((arr) => moment(arr.time).format('YYYY/MM/DD hh:mm:ss a'))
     }
 
     useEffect(() => {

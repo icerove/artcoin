@@ -2,18 +2,24 @@ import React, {useEffect, useState} from 'react'
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 import { Spinner } from 'react-bootstrap'
+import moment from 'moment'
 
 export const API_URL = 'https://api.artcoin.network/prices'
 export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 
-                        'aEUR', 'aGOOG', 'aTSLA', 'aNFLX', 'aAAPL', 'aFB']
+                        'aEUR', 'aGOOG', 'aTSLA', 'aNFLX', 'aAAPL', 'aFB',
+                        'a-xBTC', 'a-2xBTC', 'a-3xBTC', 'a-5xBTC', 'a-10xBTC',
+                      'a2xBTC', 'a3xBTC', 'a5xBTC', 'a10xBTC']
 
 const Dash = () => {
     const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, 
-      aGOLD: null, aSPY: null, aEUR: null, aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null })
+      aGOLD: null, aSPY: null, aEUR: null, aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null,
+    'a-xBTC': null, 'a-2xBTC': null, 'a-3xBTC': null, 'a-5xBTC': null, 'a-10xBTC': null,
+    'a2xBTC': null, 'a3xBTC': null, 'a5xBTC': null, 'a10xBTC': null })
 
     const getPriceList = async () => {
         let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null, 
-          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null}
+          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null,    'a-xBTC': null, 'a-2xBTC': null, 'a-3xBTC': null, 'a-5xBTC': null, 'a-10xBTC': null,
+          'a2xBTC': null, 'a3xBTC': null, 'a5xBTC': null, 'a10xBTC': null }
 
         for(const p in dailyPriceList){
             let res3 = await fetch(`${API_URL}/${p}/1D`, {
@@ -42,7 +48,7 @@ const Dash = () => {
     }
 
     const getDate = (array) => {
-        return array.map((arr) => new Date(arr.time).toLocaleTimeString('en-US'))
+        return array.map((arr) => moment(arr.time).format('YYYY/MM/DD hh:mm:ss a'))
     }
 
     const getOption = (title, data, date) => {
@@ -74,7 +80,7 @@ const Dash = () => {
               },
               axisLabel : {
                 formatter: function (value) {
-                    return value > 1000 ? value/1000 + 'k' : value
+                    return value > 1000 ? Math.round(value/1000) + 'k' : value
                 }
               },
               min: function (value) {
@@ -120,7 +126,7 @@ const Dash = () => {
 
     }
 
-    return <div>
+  return <div>
         <h3 style={{padding: '5px 5%'}}> aUSD is the first decentralized native stable coin on NEAR. You can trade virtual assets like BTC, Gold, EUR and S&P500 Index on ARTIFICIAL EXCHANGE, a DeFi asset exchange built on NEAR</h3>
         <div className="dash-charts">
             {coinList.map((coin) => <div className="box"><Charts index={coin} /></div>)}
