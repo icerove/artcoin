@@ -1,138 +1,143 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from "react";
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
-import { Spinner } from 'react-bootstrap'
-import moment from 'moment'
-
-export const API_URL = 'https://api.artcoin.network/prices'
-export const coinList = ['art', 'aNEAR', 'aBTC', 'aGOLD', 'aSPY', 
-                        'aEUR', 'aGOOG', 'aTSLA', 'aNFLX', 'aAAPL', 'aFB',
-                        'a-xBTC', 'a-2xBTC', 'a-3xBTC', 'a-5xBTC', 'a-10xBTC',
-                      'a2xBTC', 'a3xBTC', 'a5xBTC', 'a10xBTC']
+import { Spinner } from "react-bootstrap";
+import moment from "moment";
+import { API_URL, coinList, initialState_null } from "./State/state";
 
 const Dash = () => {
-    const [day, setDay] = useState({art: null, aNEAR: null, aBTC: null, 
-      aGOLD: null, aSPY: null, aEUR: null, aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null,
-    'a-xBTC': null, 'a-2xBTC': null, 'a-3xBTC': null, 'a-5xBTC': null, 'a-10xBTC': null,
-    'a2xBTC': null, 'a3xBTC': null, 'a5xBTC': null, 'a10xBTC': null })
+  const [day, setDay] = useState(initialState_null);
 
-    const getPriceList = async () => {
-        let dailyPriceList = {art: null, aNEAR: null, aBTC: null, aGOLD: null, aSPY: null, aEUR: null, 
-          aGOOG: null, aTSLA: null, aNFLX: null, aAAPL: null, aFB: null,    'a-xBTC': null, 'a-2xBTC': null, 'a-3xBTC': null, 'a-5xBTC': null, 'a-10xBTC': null,
-          'a2xBTC': null, 'a3xBTC': null, 'a5xBTC': null, 'a10xBTC': null }
+  const getPriceList = async () => {
+    let dailyPriceList = initialState_null;
 
-        for(const p in dailyPriceList){
-            let res3 = await fetch(`${API_URL}/${p}/1D`, {
-                headers : { 
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                 }
-          
-              })
-            res3 = await res3.json()
-            dailyPriceList[p] = res3
-        }
-
-        setDay(dailyPriceList)
+    for (const p in dailyPriceList) {
+      let res3 = await fetch(`${API_URL}/${p}/1D`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      res3 = await res3.json();
+      dailyPriceList[p] = res3;
     }
 
-    useEffect(() => {
-      async function fetchData() {
-        await getPriceList()
-      }
-      fetchData()
-    }, [])
+    setDay(dailyPriceList);
+  };
 
-    const getPrice = (array) => {
-        return array.map((arr) => arr.price.toFixed(2))
+  useEffect(() => {
+    async function fetchData() {
+      await getPriceList();
     }
+    fetchData();
+  }, []);
 
-    const getDate = (array) => {
-        return array.map((arr) => moment(arr.time).format('YYYY/MM/DD hh:mm:ss a'))
-    }
+  const getPrice = (array) => {
+    return array.map((arr) => arr.price.toFixed(2));
+  };
 
-    const getOption = (title, data, date) => {
-        return {
-          title: {
-            text: title,
-            textStyle: {
-                fontWeight: 'lighter',
-                fontSize: 14
-            }
+  const getDate = (array) => {
+    return array.map((arr) => moment(arr.time).format("YYYY/MM/DD hh:mm:ss a"));
+  };
+
+  const getOption = (title, data, date) => {
+    return {
+      title: {
+        text: title,
+        textStyle: {
+          fontWeight: "lighter",
+          fontSize: 14,
+        },
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      xAxis: [
+        {
+          type: "category",
+          boundaryGap: false,
+          data: date,
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          splitLine: {
+            lineStyle: {
+              color: "white",
+            },
           },
-          tooltip: {
-            trigger: "axis",
+          axisLabel: {
+            formatter: function (value) {
+              return value > 1000 ? Math.round(value / 1000) + "k" : value;
+            },
           },
-          xAxis: [
-            {
-              type: "category",
-              boundaryGap: false,
-              data: date
-            },
-          ],
-          yAxis: [
-            {
-              type: "value",
-              splitLine: {
-                lineStyle: {
-                  color: "white",
-                },
+          min: function (value) {
+            return value.min - value.min * 0.02;
+          },
+        },
+      ],
+      series: [
+        {
+          name: "Price: ",
+          type: "line",
+          lineStyle: {
+            color: "#9c87f7",
+            width: 1,
+          },
+          symbol: "none",
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: "rgb(207, 196, 255)",
               },
-              axisLabel : {
-                formatter: function (value) {
-                    return value > 1000 ? Math.round(value/1000) + 'k' : value
-                }
+              {
+                offset: 1,
+                color: "rgba(236, 232, 255, 0.1)",
               },
-              min: function (value) {
-                return value.min - value.min * 0.02;
-              }
-            },
-          ],
-          series: [
-            {
-              name: "Price: ",
-              type: "line",
-              lineStyle: {
-                color: "#9c87f7",
-                width: 1,
-              },
-              symbol: 'none',
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgb(207, 196, 255)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(236, 232, 255, 0.1)",
-                  },
-                ]),
-              },
-              data: data,
-            },
-          ],
-        };
+            ]),
+          },
+          data: data,
+        },
+      ],
     };
+  };
 
-    const Charts = ({index}) => {
-        if (day[index]) {
-            return (<ReactEcharts
-              option={getOption( index + ' / aUSD', getPrice(day[index]), getDate(day[index]))}
-              style={{width: '100%', height: '200px'}}
-        />)
-        }
-        return <Spinner animation="border" />
-
+  const Charts = ({ index }) => {
+    if (day[index]) {
+      return (
+        <ReactEcharts
+          option={getOption(
+            index + " / aUSD",
+            getPrice(day[index]),
+            getDate(day[index])
+          )}
+          style={{ width: "100%", height: "200px" }}
+        />
+      );
     }
+    return <Spinner animation="border" />;
+  };
 
-  return <div>
-        <h3 style={{padding: '5px 5%'}}> aUSD is the first decentralized native stable coin on NEAR. You can trade virtual assets like BTC, Gold, EUR and S&P500 Index on ARTIFICIAL EXCHANGE, a DeFi asset exchange built on NEAR</h3>
-        <div className="dash-charts">
-            {coinList.map((coin) => <div className="box"><Charts index={coin} /></div>)}
-        </div>
+  return (
+    <div>
+      <h3 style={{ padding: "5px 5%" }}>
+        {" "}
+        aUSD is the first decentralized native stable coin on NEAR. You can
+        trade virtual assets like cryptocurrency like BTC, Gold, EUR and stock
+        index like S&P500 Index, EUR Index on ARTIFICIAL EXCHANGE, a DeFi asset
+        exchange built on NEAR
+      </h3>
+      <div className="dash-charts">
+        {coinList.map((coin) => (
+          <div className="box">
+            <Charts index={coin} />
+          </div>
+        ))}
+      </div>
     </div>
-}
+  );
+};
 
-export default Dash
-
+export default Dash;

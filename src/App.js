@@ -1,21 +1,21 @@
-import React, {useState, useCallback} from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Spinner } from 'react-bootstrap'
+import React, { useState, useCallback } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Spinner } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 
-import ARTCard from './components/ARTCard'
-import TradeCard from './components/TradeCard'
-import Wallet from './components/Wallet'
-import FAQ from './components/FAQ'
-import Docs from './components/Docs'
-import Dash from './components/Dash'
-import Markets from './components/Markets'
+import ARTCard from "./components/ARTCard";
+import TradeCard from "./components/TradeCard";
+import Wallet from "./components/Wallet";
+import FAQ from "./components/FAQ";
+import Docs from "./components/Docs";
+import Dash from "./components/Dash";
+import Markets from "./components/Markets";
 
-import Header from './components/Header'
+import Header from "./components/Header";
 
-import Logo from './assets/logo192.png'
+import Logo from "./assets/logo192.png";
 
-import './App.css'
+import "./App.css";
 
 const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   const [isLoading, setLoading] = useState(false);
@@ -34,47 +34,83 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   if (isLoading) {
     return (
       <Container>
-      <header>art Coin Exchange</header>
-      <div>
-      <Spinner animation="border" size="sm" variant="warning"/>
-      <Spinner animation="border" size="sm" variant="warning"/>
-      <Spinner animation="border" size="sm" variant="warning"/>
-      <Spinner animation="border" variant="warning"/>
-      <Spinner animation="border" variant="warning"/>
-      <Spinner animation="border" variant="warning"/>
-      </div>
-    </Container>
-    )
+        <header>art Coin Exchange</header>
+        <div>
+          <Spinner animation="border" size="sm" variant="warning" />
+          <Spinner animation="border" size="sm" variant="warning" />
+          <Spinner animation="border" size="sm" variant="warning" />
+          <Spinner animation="border" variant="warning" />
+          <Spinner animation="border" variant="warning" />
+          <Spinner animation="border" variant="warning" />
+        </div>
+      </Container>
+    );
   }
 
-  if(!currentUser) {
+  if (!currentUser) {
     return (
       <Container>
         <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
-        <div style={{height: '50px',textAlign: 'center'}}>
-          Welcome, please Sign in with NEAR wallet to start journey!
+        <div style={{ height: "50px", textAlign: "center" }}>
+          Welcome, please sign in with NEAR wallet to start journey!
         </div>
+        <p>
+          aUSD is the first decentralized native stable coin on NEAR. You can
+          trade virtual assets like cryptocurrency like BTC, Gold, EUR and stock
+          index like S&P500 Index, EUR Index on ARTIFICIAL EXCHANGE, a DeFi
+          asset exchange built on NEAR
+        </p>
         <button onClick={signIn}>Sign In</button>
-        <div style={{margin: '20%'}}><img src={Logo} alt=""/></div>
+        <div style={{ margin: "5%" }}>
+          <img src={Logo} alt="" />
+        </div>
       </Container>
-    )
+    );
   }
 
   return (
     <Container>
       <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
       <Switch>
-        <Route exact path="/" 
-          render={() => <Dash contract={contract} accountId={currentUser.accountId}/>}/>
-        <Route exact path="/stake" 
-          render={() => <ARTCard contract={contract} currentUser={currentUser} ausdContract={ausdContract} />} />
-        <Route exact path="/trade" 
-          render={() => <TradeCard contract={contract} accountId={currentUser.accountId}/>}/>
-        <Route exact path="/wallet" 
-          render={() => <Wallet contract={contract} accountId={currentUser.accountId} ausdContract={ausdContract}/>}/>
-        <Route exact path='/faqs' component={FAQ} />
-        <Route exact path='/docs' component={Docs} />
-        <Route exact path='/markets' component={Markets} />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <Dash contract={contract} accountId={currentUser.accountId} />
+          )}
+        />
+        <Route
+          exact
+          path="/stake"
+          render={() => (
+            <ARTCard
+              contract={contract}
+              currentUser={currentUser}
+              ausdContract={ausdContract}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/trade"
+          render={() => (
+            <TradeCard contract={contract} accountId={currentUser.accountId} />
+          )}
+        />
+        <Route
+          exact
+          path="/wallet"
+          render={() => (
+            <Wallet
+              contract={contract}
+              accountId={currentUser.accountId}
+              ausdContract={ausdContract}
+            />
+          )}
+        />
+        <Route exact path="/faqs" component={FAQ} />
+        <Route exact path="/docs" component={Docs} />
+        <Route exact path="/markets" component={Markets} />
         <Route
           render={() => (
             <h1>
@@ -86,6 +122,6 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
       </Switch>
     </Container>
   );
-}
+};
 
 export default App;
