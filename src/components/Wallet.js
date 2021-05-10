@@ -3,12 +3,12 @@ import { Table } from "react-bootstrap";
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import tokenIcon from "./tokenIcon";
 
-import { coinList, initialState_zero } from "./State/state";
+import { coinList, initialState_zero_balance } from "./State/state";
 
 const Account = ({ contract, accountId, ausdContract }) => {
   const _coinList = coinList.filter((coin) => coin !== "art");
 
-  const [assetB, setAssetB] = useState(initialState_zero);
+  const [assetB, setAssetB] = useState(initialState_zero_balance);
 
   const loadAssetBalance = async (a) => {
     return await contract.get_asset_balance({
@@ -27,11 +27,10 @@ const Account = ({ contract, accountId, ausdContract }) => {
 
   useEffect(() => {
     async function loadBalance() {
-      let asset = initialState_zero;
+      let asset = initialState_zero_balance;
 
       for (const p in asset) {
         let ass = await loadAssetBalance(p);
-        console.log(ass);
         asset[p] = ass;
       }
 

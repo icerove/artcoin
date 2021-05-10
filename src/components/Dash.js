@@ -3,13 +3,14 @@ import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 import { Spinner } from "react-bootstrap";
 import moment from "moment";
-import { API_URL, coinList, initialState_null } from "./State/state";
+import { API_URL, coinList, initialState_null_dash } from "./State/state";
 
 const Dash = () => {
-  const [day, setDay] = useState(initialState_null);
+  const [day, setDay] = useState(initialState_null_dash);
+  const [ready, setReady] = useState(false);
 
   const getPriceList = async () => {
-    let dailyPriceList = initialState_null;
+    let dailyPriceList = initialState_null_dash;
 
     for (const p in dailyPriceList) {
       let res3 = await fetch(`${API_URL}/${p}/1D`, {
@@ -28,6 +29,7 @@ const Dash = () => {
   useEffect(() => {
     async function fetchData() {
       await getPriceList();
+      setReady(true);
     }
     fetchData();
   }, []);
@@ -57,6 +59,11 @@ const Dash = () => {
           type: "category",
           boundaryGap: false,
           data: date,
+          axisLabel: {
+            formatter: function (value) {
+              return moment(value).format("hh:mm:ss");
+            },
+          },
         },
       ],
       yAxis: [
@@ -105,7 +112,7 @@ const Dash = () => {
   };
 
   const Charts = ({ index }) => {
-    if (day[index]) {
+    if (ready) {
       return (
         <ReactEcharts
           option={getOption(
@@ -131,7 +138,7 @@ const Dash = () => {
       </h3>
       <div className="dash-charts">
         {coinList.map((coin) => (
-          <div className="box">
+          <div className="box" key={coin}>
             <Charts index={coin} />
           </div>
         ))}

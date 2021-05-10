@@ -13,14 +13,15 @@ import {
 } from "./State/state";
 
 const Markets = () => {
-  const [month, setMonth] = useState(initialState_null);
-  const [week, setWeek] = useState(initialState_null);
+  const [month, setMonth] = useState(initialState_null_month);
+  const [week, setWeek] = useState(initialState_null_week);
   const [day, setDay] = useState(initialState_null);
+  const [ready, setReady] = useState(false);
 
   const getPriceList = async () => {
-    let monthlyPriceList = initialState_null;
+    let monthlyPriceList = initialState_null_month;
     let weeklyPriceList = initialState_null_week;
-    let dailyPriceList = initialState_null_month;
+    let dailyPriceList = initialState_null;
 
     for (const p in monthlyPriceList) {
       let res1 = await fetch(`${API_URL}/${p}/1M`, {
@@ -71,6 +72,7 @@ const Markets = () => {
   useEffect(() => {
     async function fetchData() {
       await getPriceList();
+      setReady(true);
     }
     fetchData();
   }, []);
@@ -198,7 +200,7 @@ const Markets = () => {
           </Form.Control>
         </Form.Group>
       </Row>
-      {day.art !== null ? (
+      {ready ? (
         <div>
           <Charts index={currentAsset} />
         </div>

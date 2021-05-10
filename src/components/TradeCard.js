@@ -13,12 +13,15 @@ import {
 import { formatNearAmount } from "near-api-js/lib/utils/format";
 import AlertBanner from "./Alerts";
 import tokenIcon from "./tokenIcon";
-import { initialState_zero } from "./State/state";
+import {
+  initialState_zero_price,
+  initialState_zero_balance,
+} from "./State/state";
 const GAS = 300000000000000;
 
 const TradeCard = ({ contract, accountId }) => {
-  const [assetP, setAssetP] = useState(initialState_zero);
-  const [assetB, setAssetB] = useState(initialState_zero);
+  const [assetP, setAssetP] = useState(initialState_zero_price);
+  const [assetB, setAssetB] = useState(initialState_zero_balance);
   const [currentAsset, setCurrentAsset] = useState("aBTC");
 
   // Button text, '' means show text, 'l' means show spinner
