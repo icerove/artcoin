@@ -10,10 +10,9 @@ import FAQ from "./components/FAQ";
 import Docs from "./components/Docs";
 import Dash from "./components/Dash";
 import Markets from "./components/Markets";
+import LandingPage from "./components/LandingPage";
 
 import Header from "./components/Header";
-
-import Logo from "./assets/logo192.png";
 
 import "./App.css";
 
@@ -34,7 +33,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   if (isLoading) {
     return (
       <Container>
-        <header>art Coin Exchange</header>
+        <header>Artificial Coin Network</header>
         <div>
           <Spinner animation="border" size="sm" variant="warning" />
           <Spinner animation="border" size="sm" variant="warning" />
@@ -48,29 +47,12 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   }
 
   if (!currentUser) {
-    return (
-      <Container>
-        <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
-        <div style={{ height: "50px", textAlign: "center" }}>
-          Welcome, please sign in with NEAR wallet to start journey!
-        </div>
-        <p>
-          aUSD is the first decentralized native stable coin on NEAR. You can
-          trade virtual assets like cryptocurrency like BTC, Gold, EUR and stock
-          index like S&P500 Index, EUR Index on ARTIFICIAL EXCHANGE, a DeFi
-          asset exchange built on NEAR
-        </p>
-        <button onClick={signIn}>Sign In</button>
-        <div style={{ margin: "5%" }}>
-          <img src={Logo} alt="" />
-        </div>
-      </Container>
-    );
+    return <LandingPage signIn={signIn} />;
   }
 
   return (
     <Container>
-      <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
+      <Header signOut={signOut} currentUser={currentUser} />
       <Switch>
         <Route
           exact
