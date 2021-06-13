@@ -13,14 +13,14 @@ const LandingPage = ({ signIn }) => {
   const stableCoinText =
     "aUSD is the native, decentralized stable coin in ArtCoin Network Platform. It's used to value all other artificial assets.";
   const stakeText =
-    "Staking Art Coin, the governance token of ArtCoin Network Platform to mint aUSD and earn staking rewards."
+    "Staking Art Coin, the governance token of ArtCoin Network Platform to mint aUSD and earn staking rewards.";
   const exchangeText =
     "Exchange between any kind of assets without compliance concerns. Trade with infinite liquidity, extremely low fee and instant settlement.";
   return (
     <div className="landing">
-      <Row noGutters className="p-3 line">
+      <Row noGutters className="p-2 line">
         <Col md="9" xs="6">
-          <NavLink exact to="/" className="land-item">
+          <NavLink exact to="/" className="text-d">
             <div style={{ display: "flex" }}>
               <div>
                 <img className="logo" src={Logo} alt="" />
@@ -45,7 +45,7 @@ const LandingPage = ({ signIn }) => {
           </NavLink>
         </Col>
       </Row>
-      <Row noGutters className="mb-6 pt-6 poster">
+      <Row noGutters className="p-6 poster">
         <div style={{ width: "100%" }}>
           <h1 className="landing-text title-weight">{posterTitle}</h1>
         </div>
@@ -78,16 +78,27 @@ export default LandingPage;
 const Card = ({ icon, title, text }) => {
   return (
     <div className="fancy-border card-container">
-      <Row noGutters style={{ width: "100%", margin: "auto" }}>
-        <img src={icon} />
-      </Row>
       <Row
         noGutters
-        style={{ color: "white", fontWeight: "bold", width: "100%" }}
+        style={{ width: "100%", margin: "auto", marginBottom: "10px" }}
       >
-        {title}
+        <Col md="4">
+          <img src={icon} />
+        </Col>
+        <Col
+          style={{
+            color: "#348ee2",
+            fontWeight: "bolder",
+            fontSize: "1.5rem",
+            paddingTop: "20px",
+          }}
+        >
+          {title}
+        </Col>
       </Row>
-      <Row noGutters>{text}</Row>
+      <Row noGutters className="mt-3">
+        {text}
+      </Row>
     </div>
   );
 };

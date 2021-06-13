@@ -10,7 +10,7 @@ const Header = ({ currentUser, signOut }) => {
   return (
     <Row noGutters className="mb-5">
       <Col className="pr-2">
-        <NavLink exact to="/" className="head-item">
+        <NavLink exact to="/" className="text-d">
           <div style={{ display: "flex" }}>
             <div>
               <img className="logo" src={Logo} alt="" />

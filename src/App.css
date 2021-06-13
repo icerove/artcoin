@@ -23,7 +23,8 @@ header {
 .head-item,
 .head-title,
 .land-item,
-.land-title {
+.land-title,
+.text-d {
   text-decoration: none !important;
 }
 
@@ -190,7 +191,7 @@ h2 {
 .landing-text {
   position: relative;
   left: 70%;
-  width: 240px;
+  width: 30%;
   margin: 0;
 }
 
