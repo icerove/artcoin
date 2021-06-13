@@ -1,7 +1,9 @@
 body {
   background-color: #f7f7fb;
+  /* background-image: url("./assets/circle.jpeg"); */
   color: #5250af;
   font-weight: 500;
+  height: 100vh;
 }
 
 .container {
@@ -18,8 +20,49 @@ header {
   margin-bottom: 3%;
 }
 
-.head-item {
+.head-item,
+.head-title,
+.land-item,
+.land-title {
   text-decoration: none !important;
+}
+
+.head-title {
+  font-size: 1.2rem;
+}
+
+.land-title {
+  font-size: 1.5rem;
+}
+
+.head-item:hover,
+.head-item:active,
+.head-item:focus {
+  padding: 10%;
+  background: #cecbf1;
+  box-shadow: 0 0 8px #7c71f4;
+}
+
+.head-title:hover {
+  color: #9c87f7;
+}
+
+.land-item:hover,
+.land-item:active,
+.land-item:focus {
+  padding: 10%;
+  background: radial-gradient(
+    circle,
+    rgb(0, 36, 114) 70%,
+    rgb(2, 90, 255),
+    rgb(0, 140, 255)
+  );
+  box-shadow: 0 0 8px #00a0eb;
+  color: #43c4ff;
+}
+
+.land-title:hover {
+  color: #43c4ff;
 }
 
 .art-card,
@@ -31,14 +74,16 @@ header {
 
 .btn {
   background-color: #9c87f7;
-  border-radius: 0;
+  border-radius: 10%;
   border: none;
 }
 
 button {
   color: #7c71f4;
-  background-color: #e2e1ed;
+  background-color: #ebeafd;
   border: none;
+  border-radius: 5%;
+  box-shadow: 0 0 6px #cecbf1;
 }
 
 button:hover {
@@ -100,4 +145,73 @@ h2 {
 
 .docs {
   text-align: start;
+}
+
+.landing {
+  background-image: url("./assets/poster.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  color: #fff;
+  background-color: #020024;
+}
+
+.btnl {
+  box-shadow: rgb(0 209 255 / 90%) 0px 0px 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: rgb(0, 132, 255);
+  border: none;
+  color: rgb(6, 6, 27);
+  outline: none;
+  cursor: pointer;
+  font-family: "GT America";
+  font-style: normal;
+  font-weight: bold;
+  font-stretch: condensed;
+  font-size: 13px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 50%;
+  height: 50%;
+  transition: opacity 0.2s ease-out 0s, color 0.2s ease-out 0s,
+    background 0.2s ease-out 0s;
+}
+
+.poster {
+  width: 90%;
+  height: calc(100vh - 100px);
+}
+
+.line {
+  border-bottom: 0.5px solid rgb(0, 84, 211);
+}
+
+.landing-text {
+  position: relative;
+  left: 70%;
+  width: 240px;
+  margin: 0;
+}
+
+.title-weight {
+  font-weight: bolder;
+}
+
+.fancy-border {
+  border: 3px solid;
+  border-image: linear-gradient(
+      to right,
+      rgb(149, 248, 255) 25%,
+      rgb(170, 139, 219) 75%
+    )
+    5;
+}
+
+.card-container {
+  border-radius: 10px;
+  background: #1c1c3d;
+  height: 300px;
+  padding: 10%;
+  margin: 5%;
 }

@@ -47,7 +47,52 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   }
 
   if (!currentUser) {
-    return <LandingPage signIn={signIn} />;
+    return (
+      <div>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <LandingPage signIn={signIn} />}
+          />
+          <Route
+            exact
+            path="/faqs"
+            render={() => (
+              <Container>
+                <FAQ />
+              </Container>
+            )}
+          />
+          <Route
+            exact
+            path="/docs"
+            render={() => (
+              <Container>
+                <Docs />
+              </Container>
+            )}
+          />
+          <Route
+            exact
+            path="/markets"
+            render={() => (
+              <Container>
+                <Markets />
+              </Container>
+            )}
+          />
+          <Route
+            render={() => (
+              <h1>
+                Not found This page. Please go back to continue or you can
+                contact us about the issue.
+              </h1>
+            )}
+          />
+        </Switch>
+      </div>
+    );
   }
 
   return (

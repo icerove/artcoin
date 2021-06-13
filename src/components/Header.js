@@ -15,7 +15,7 @@ const Header = ({ currentUser, signOut }) => {
             <div>
               <img className="logo" src={Logo} alt="" />
             </div>
-            <div>ARTIFICIAL EXCHANGE</div>
+            <div className="head-title">ARTIFICIAL EXCHANGE</div>
           </div>
         </NavLink>
       </Col>
