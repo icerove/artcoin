@@ -7,15 +7,15 @@ import exchange from "../assets/exchange.png";
 import Logo from "../assets/logo192.png";
 
 const LandingPage = ({ signIn }) => {
-  const posterTitle = "THE DERIVATIVES LIQUIDITY PROTOCOL";
+  const posterTitle = "Trade Artificial Assets Instantly with Low Fee";
   const posterSubtitle =
-    "Synthetix is the backbone for derivatives trading in DeFi, allowing anyone, anywhere to gain on-chain exposure to a vast range of assets.  ";
+    "ArtCoin Network is an extremely flat transaction fee (several cents), instantly settlement (seconds) artificial assets trading platform. Allowing anyone, anywhere to trade a vast range of assets of cryptocurrencies, stocks, indexes and commodities.";
   const stableCoinText =
-    "Decentralized asset management protocol connecting the world’s best investment managers with investors on the Ethereum blockchain in a permissionless, non-custodial, trustless fashion.";
+    "aUSD is the native, decentralized stable coin in ArtCoin Network Platform. It's used to value all other artificial assets.";
   const stakeText =
-    "Decentralized asset management protocol connecting the world’s best investment managers with investors on the Ethereum blockchain in a permissionless, non-custodial, trustless fashion.";
+    "Staking Art Coin, the governance token of ArtCoin Network Platform to mint aUSD and earn staking rewards."
   const exchangeText =
-    "Decentralized asset management protocol connecting the world’s best investment managers with investors on the Ethereum blockchain in a permissionless, non-custodial, trustless fashion.";
+    "Exchange between any kind of assets without compliance concerns. Trade with infinite liquidity, extremely low fee and instant settlement.";
   return (
     <div className="landing">
       <Row noGutters className="p-3 line">
@@ -45,7 +45,7 @@ const LandingPage = ({ signIn }) => {
           </NavLink>
         </Col>
       </Row>
-      <Row noGutters className="mb-5 pt-5 poster">
+      <Row noGutters className="mb-6 pt-6 poster">
         <div style={{ width: "100%" }}>
           <h1 className="landing-text title-weight">{posterTitle}</h1>
         </div>
