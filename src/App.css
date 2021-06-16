@@ -154,6 +154,7 @@ h2 {
   background-size: 100% auto;
   color: #fff;
   background-color: #020024;
+  height: 100vh;
 }
 
 .btnl {
@@ -174,9 +175,13 @@ h2 {
   text-align: center;
   text-transform: uppercase;
   width: 50%;
-  height: 50%;
+  height: 100%;
   transition: opacity 0.2s ease-out 0s, color 0.2s ease-out 0s,
     background 0.2s ease-out 0s;
+}
+
+.btnl:hover {
+  background-color: rgb(122, 191, 255);
 }
 
 .poster {
@@ -186,6 +191,10 @@ h2 {
 
 .line {
   border-bottom: 0.5px solid rgb(0, 84, 211);
+}
+
+.upper-line {
+  border-top: 0.5px solid rgb(0, 84, 211);
 }
 
 .landing-text {
@@ -215,4 +224,19 @@ h2 {
   height: 300px;
   padding: 10%;
   margin: 5%;
+}
+
+.commute,
+.blue {
+  width: 32px;
+  height: 32px;
+}
+
+.blue:hover {
+  background: radial-gradient(
+    circle,
+    rgb(0, 140, 255) 70%,
+    rgb(0, 36, 114),
+    rgb(2, 90, 255)
+  );
 }
