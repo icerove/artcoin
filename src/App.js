@@ -13,6 +13,7 @@ import Markets from "./components/Markets";
 import LandingPage from "./components/LandingPage";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import "./App.css";
 
@@ -147,6 +148,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           )}
         />
       </Switch>
+      <Footer currentUser={currentUser} />
     </Container>
   );
 };
