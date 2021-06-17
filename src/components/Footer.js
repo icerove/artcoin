@@ -67,7 +67,7 @@ const Footer = ({ currentUser }) => {
       </Col>
       <Col className="p-1">
         <div className="blue">
-          <a href="https://github.com/icerove/artcoin">
+          <a href="https://github.com/Artcoin-Network">
             <img
               src={Github}
               alt="Github"
