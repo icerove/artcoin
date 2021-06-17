@@ -4,14 +4,11 @@ import { Row, Col } from "react-bootstrap";
 import Logo from "../assets/logo192.png";
 
 const Header = ({ currentUser, signOut }) => {
-  if (!currentUser) {
-    return <h3 style={{ textAlign: "center" }}>ARTIFICIAL EXCHANGE</h3>;
-  }
   return (
-    <Row noGutters className="mb-5">
-      <Col className="pr-2">
+    <Row noGutters className="mb-5 pb-2 line">
+      <Col className="pr-2" md="4" xs="12">
         <NavLink exact to="/" className="text-d">
-          <div style={{ display: "flex" }}>
+          <div className="logo-small">
             <div>
               <img className="logo" src={Logo} alt="" />
             </div>
@@ -19,24 +16,28 @@ const Header = ({ currentUser, signOut }) => {
           </div>
         </NavLink>
       </Col>
+      {currentUser && (
+        <>
+          <Col className="p-2">
+            <NavLink exact to="/wallet" className="head-item">
+              Wallet
+            </NavLink>
+          </Col>
+          <Col className="p-2">
+            <NavLink exact to="/trade" className="head-item">
+              Trade
+            </NavLink>
+          </Col>
+          <Col className="p-2">
+            <NavLink exact to="/stake" className="head-item">
+              Stake
+            </NavLink>
+          </Col>
+        </>
+      )}
       <Col className="p-2">
         <NavLink exact to="/markets" className="head-item">
           Markets
-        </NavLink>
-      </Col>
-      <Col className="p-2">
-        <NavLink exact to="/wallet" className="head-item">
-          Wallet
-        </NavLink>
-      </Col>
-      <Col className="p-2">
-        <NavLink exact to="/trade" className="head-item">
-          Trade
-        </NavLink>
-      </Col>
-      <Col className="p-2">
-        <NavLink exact to="/stake" className="head-item">
-          Stake
         </NavLink>
       </Col>
       <Col className="p-2">
@@ -49,9 +50,11 @@ const Header = ({ currentUser, signOut }) => {
           DOCs
         </NavLink>
       </Col>
-      <Col onClick={signOut} className="p-2">
-        <button onClick={signOut}>Sign Out</button>
-      </Col>
+      {currentUser && (
+        <Col onClick={signOut} className="p-2">
+          <button onClick={signOut}>Sign Out</button>
+        </Col>
+      )}
     </Row>
   );
 };

@@ -23,9 +23,9 @@ const LandingPage = ({ signIn }) => {
     <div style={{ background: "#020024" }}>
       <div className="landing">
         <Row noGutters className="p-4 line">
-          <Col md="9" xs="6">
+          <Col md="9" xs="12">
             <NavLink exact to="/" className="text-d">
-              <div style={{ display: "flex" }}>
+              <div className="logo-small">
                 <div>
                   <img className="logo" src={Logo} alt="" />
                 </div>
@@ -69,21 +69,21 @@ const LandingPage = ({ signIn }) => {
           <p style={{ width: "100%" }}>the best exchange you every try</p>
         </Row>
         <Row>
-          <Col>
+          <Col xs="12" md="4">
             <Card icon={dollar} title="Stable Coin" text={stableCoinText} />
           </Col>
-          <Col>
+          <Col xs="12" md="4">
             <Card icon={stake} title="Stake and Earn" text={stakeText} />
           </Col>
-          <Col>
+          <Col xs="12" md="4">
             <Card icon={exchange} title="Exchange" text={exchangeText} />
           </Col>
         </Row>
       </Row>
       <Row noGutters className="p-4">
-        <Col md="6" xs="12">
+        <Col md="8" xs="12">
           <NavLink exact to="/" className="text-d">
-            <div style={{ display: "flex" }}>
+            <div className="logo-small">
               <div>
                 <img className="logo" src={Logo} alt="" />
               </div>
@@ -107,36 +107,39 @@ const LandingPage = ({ signIn }) => {
         </Col>
         <Col className="p-1">
           <div className="blue">
-            <a href="#">
+            <a href="https://discord.gg/b2qvhGg8">
               <img
                 src={Discord}
-                alt="discord"
+                alt="Discord"
                 className="commute"
                 target="_blank"
+                rel="noopener noreferrer"
               />
             </a>
           </div>
         </Col>
         <Col className="p-1">
           <div className="blue">
-            <a href="#">
+            <a href="https://github.com/icerove/artcoin">
               <img
                 src={Github}
-                alt="discord"
+                alt="Github"
                 className="commute"
                 target="_blank"
+                rel="noopener noreferrer"
               />
             </a>
           </div>
         </Col>
         <Col className="p-1">
           <div className="blue">
-            <a href="#">
+            <a href="https://twitter.com/AExcahnge">
               <img
                 src={Twitter}
-                alt="discord"
+                alt="Twitter"
                 className="commute"
                 target="_blank"
+                rel="noopener noreferrer"
               />
             </a>
           </div>
@@ -153,10 +156,14 @@ const Card = ({ icon, title, text }) => {
     <div className="fancy-border card-container">
       <Row
         noGutters
-        style={{ width: "100%", margin: "auto", marginBottom: "10px" }}
+        style={{
+          width: "100%",
+          margin: "auto",
+          marginBottom: "10px",
+        }}
       >
         <Col md="4">
-          <img src={icon} />
+          <img src={icon} className="card-text" />
         </Col>
         <Col
           style={{
