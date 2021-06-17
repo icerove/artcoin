@@ -3,16 +3,16 @@ import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Logo from "../assets/logo192.png";
 
-const Header = ({ currentUser, signOut }) => {
+const Header = ({ currentUser, signOut, signIn }) => {
   return (
     <Row noGutters className="mb-5 pb-2 line">
-      <Col className="pr-2" md="4" xs="12">
+      <Col className="pr-2" md={currentUser ? "4" : "7"} xs="12">
         <NavLink exact to="/" className="text-d">
           <div className="logo-small">
             <div>
               <img className="logo" src={Logo} alt="" />
             </div>
-            <div className="head-title">ARTIFICIAL EXCHANGE</div>
+            <div className="head-title">ARTCOIN NETWORK</div>
           </div>
         </NavLink>
       </Col>
@@ -25,7 +25,7 @@ const Header = ({ currentUser, signOut }) => {
           </Col>
           <Col className="p-2">
             <NavLink exact to="/trade" className="head-item">
-              Trade
+              Exchange
             </NavLink>
           </Col>
           <Col className="p-2">
@@ -50,9 +50,13 @@ const Header = ({ currentUser, signOut }) => {
           DOCs
         </NavLink>
       </Col>
-      {currentUser && (
-        <Col onClick={signOut} className="p-2">
+      {currentUser ? (
+        <Col className="p-2">
           <button onClick={signOut}>Sign Out</button>
+        </Col>
+      ) : (
+        <Col className="p-2">
+          <button onClick={signIn}>Log In</button>
         </Col>
       )}
     </Row>

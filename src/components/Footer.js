@@ -9,7 +9,7 @@ import Twitter from "../assets/twitter.svg";
 const Footer = ({ currentUser }) => {
   return (
     <Row noGutters className="mb-5 pt-2 pb-5 upper-line">
-      <Col className="pr-2" md="8" xs="12">
+      <Col className="pr-2" md={currentUser ? "4" : "8"} xs="12">
         <NavLink exact to="/" className="text-d">
           <div className="logo-small">
             <div>
@@ -27,7 +27,7 @@ const Footer = ({ currentUser }) => {
           </Col>
           <Col className="p-2">
             <NavLink exact to="/trade" className="head-item">
-              Trade
+              Exchange
             </NavLink>
           </Col>
           <Col className="p-2">
@@ -80,7 +80,7 @@ const Footer = ({ currentUser }) => {
       </Col>
       <Col className="p-1">
         <div className="blue">
-          <a href="https://twitter.com/AExcahnge">
+          <a href="https://twitter.com/ArtcoinNetwork">
             <img
               src={Twitter}
               alt="Twitter"

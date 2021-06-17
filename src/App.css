@@ -151,9 +151,6 @@ h2 {
 }
 
 .landing {
-  background-image: url("./assets/poster.png");
-  background-repeat: no-repeat;
-  background-size: 100% auto;
   color: #fff;
   background-color: #020024;
   height: 100vh;
@@ -170,8 +167,8 @@ h2 {
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;
-  width: 30%;
-  height: 100%;
+  width: 60%;
+  height: 20%;
   transition: opacity 0.2s ease-out 0s, color 0.2s ease-out 0s,
     background 0.2s ease-out 0s;
   padding: 10px;
@@ -184,6 +181,8 @@ h2 {
 .poster {
   width: 90%;
   height: calc(100vh - 100px);
+  display: flex;
+  justify-content: space-around;
 }
 
 .line {
@@ -194,11 +193,14 @@ h2 {
   border-top: 0.5px solid rgb(0, 84, 211);
 }
 
+.landing-poster {
+  height: 100%;
+  width: 100%;
+  margin-left: 10%;
+}
+
 .landing-text {
-  position: relative;
-  left: 70%;
-  width: 30%;
-  margin: 0;
+  width: 100%;
 }
 
 .title-weight {
@@ -242,10 +244,12 @@ h2 {
   box-shadow: 0 0 16px #9ed8ff;
 }
 
+.logo-small {
+  display: flex;
+  justify-content: start;
+}
+
 @media all and (max-width: 416px) {
-  .landing {
-    background-image: none;
-  }
   .landing-text {
     position: static;
     width: 100%;
@@ -260,5 +264,8 @@ h2 {
   .logo-small {
     display: flex;
     justify-content: space-around;
+  }
+  .box {
+    width: 100%;
   }
 }

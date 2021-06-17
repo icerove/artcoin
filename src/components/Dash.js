@@ -129,13 +129,6 @@ const Dash = () => {
 
   return (
     <div>
-      <h3 style={{ padding: "5px 5%" }}>
-        {" "}
-        aUSD is the first decentralized native stable coin on NEAR. You can
-        trade virtual assets like cryptocurrency like BTC, Gold, EUR and stock
-        index like S&P500 Index, EUR Index on ARTIFICIAL EXCHANGE, a DeFi asset
-        exchange built on NEAR
-      </h3>
       <div className="dash-charts">
         {coinList.map((coin) => (
           <div className="box" key={coin}>

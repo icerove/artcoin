@@ -5,6 +5,8 @@ import dollar from "../assets/dollar.png";
 import stake from "../assets/stake.png";
 import exchange from "../assets/exchange.png";
 import Logo from "../assets/logo192.png";
+import Poster from "../assets/poster.png";
+
 import Discord from "../assets/discord.svg";
 import Github from "../assets/github.svg";
 import Twitter from "../assets/twitter.svg";
@@ -29,7 +31,7 @@ const LandingPage = ({ signIn }) => {
                 <div>
                   <img className="logo" src={Logo} alt="" />
                 </div>
-                <div className="land-title">ARTIFICIAL EXCHANGE</div>
+                <div className="land-title">ARTCOIN NETWORK</div>
               </div>
             </NavLink>
           </Col>
@@ -49,18 +51,23 @@ const LandingPage = ({ signIn }) => {
             </NavLink>
           </Col>
         </Row>
-        <Row noGutters className="p-3 m-5">
-          <div style={{ width: "100%" }}>
-            <h1 className="landing-text title-weight">{posterTitle}</h1>
-          </div>
-          <div style={{ width: "100%", color: "gray" }}>
-            <p className="landing-text">{posterSubtitle}</p>
-          </div>
-          <div style={{ width: "100%", height: "100%", marginTop: "30px" }}>
-            <button className="btnl landing-text" onClick={signIn}>
-              Get Started
-            </button>
-          </div>
+        <Row noGutters className="p-3 m-5" className="poster">
+          <Col className="landing-poster d-none d-lg-block">
+            <img src={Poster} alt="" />
+          </Col>
+          <Col className="p-5 landing-text">
+            <div>
+              <h1 className="title-weight">{posterTitle}</h1>
+            </div>
+            <div style={{ color: "gray" }}>
+              <p>{posterSubtitle}</p>
+            </div>
+            <div style={{ width: "100%", height: "50%", marginTop: "30px" }}>
+              <button className="btnl " onClick={signIn}>
+                Get Started
+              </button>
+            </div>
+          </Col>
         </Row>
       </div>
       <Row noGutters className="p-5 upper-line line">
@@ -133,7 +140,7 @@ const LandingPage = ({ signIn }) => {
         </Col>
         <Col className="p-1">
           <div className="blue">
-            <a href="https://twitter.com/AExcahnge">
+            <a href="https://twitter.com/ArtcoinNetwork">
               <img
                 src={Twitter}
                 alt="Twitter"

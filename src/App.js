@@ -61,7 +61,11 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
             path="/faqs"
             render={() => (
               <Container>
-                <Header signOut={signOut} currentUser={currentUser} />
+                <Header
+                  signIn={signIn}
+                  signOut={signOut}
+                  currentUser={currentUser}
+                />
                 <FAQ />
                 <Footer currentUser={currentUser} />
               </Container>
@@ -72,7 +76,11 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
             path="/docs"
             render={() => (
               <Container>
-                <Header signOut={signOut} currentUser={currentUser} />
+                <Header
+                  signIn={signIn}
+                  signOut={signOut}
+                  currentUser={currentUser}
+                />
                 <Docs />
                 <Footer currentUser={currentUser} />
               </Container>
@@ -83,7 +91,11 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
             path="/markets"
             render={() => (
               <Container>
-                <Header signOut={signOut} currentUser={currentUser} />
+                <Header
+                  signIn={signIn}
+                  signOut={signOut}
+                  currentUser={currentUser}
+                />
                 <Markets />
                 <Footer currentUser={currentUser} />
               </Container>
@@ -104,7 +116,7 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
 
   return (
     <Container>
-      <Header signOut={signOut} currentUser={currentUser} />
+      <Header signIn={signIn} signOut={signOut} currentUser={currentUser} />
       <Switch>
         <Route
           exact
