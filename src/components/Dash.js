@@ -129,6 +129,7 @@ const Dash = () => {
 
   return (
     <div>
+      <h3>Start trading today</h3>
       <div className="dash-charts">
         {coinList.map((coin) => (
           <div className="box" key={coin}>

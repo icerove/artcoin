@@ -72,13 +72,21 @@ header {
 .trade-card {
   width: 100%;
   text-align: left;
-  background-color: #f2f1f6;
+  background-color: #f6f4ff;
 }
 
 .btn {
   background-color: #9c87f7;
   border-radius: 10%;
   border: none;
+  box-shadow: 5px 5px 5px 1px rgba(0, 0, 255, 0.2);
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #c0bdff;
+  box-shadow: 0 0 5px #9c87f7;
+  color: #9c87f7;
 }
 
 button {
@@ -106,12 +114,16 @@ button:hover {
 
 .price {
   background-color: #e1e3fa;
+  border-radius: 20%;
+  box-shadow: 0 0 5px #d4d7fc;
+  margin: 3%;
+  text-align: center;
 }
 
 .dash-charts {
   display: flex;
   flex-wrap: wrap;
-  padding: 5%;
+  padding: 0 5%;
   justify-content: space-between;
 }
 
@@ -197,9 +209,11 @@ h2 {
   height: 100%;
   width: 100%;
   margin-left: 10%;
+  margin-top: 5%;
 }
 
 .landing-text {
+  margin-top: 5%;
   width: 100%;
 }
 
@@ -249,6 +263,48 @@ h2 {
   justify-content: start;
 }
 
+.white {
+  color: white;
+}
+
+.card-button {
+  margin-left: 5px;
+}
+
+.form-control {
+  border: 1px solid #9c87f7;
+  background: #fff;
+  color: #9c87f7;
+}
+
+.input-group-text {
+  background: #efefff;
+  border: 1px solid #9c87f7;
+  color: #583296;
+}
+
+.move-right2 {
+  margin-left: 20%;
+}
+.move-right4 {
+  margin-left: 40%;
+}
+.move-right3 {
+  margin-left: 30%;
+}
+.move-right1 {
+  margin-left: 10%;
+}
+
+.input-shadow {
+  box-shadow: 5px 5px 5px 1px rgba(0, 0, 255, 0.2);
+}
+
+.input-shadow:hover,
+.input-shadow:active,
+.input-shadow:focus {
+  box-shadow: 0 0 1px 1px rgba(0, 0, 255, 0.1);
+}
 @media all and (max-width: 416px) {
   .landing-text {
     position: static;
@@ -267,5 +323,11 @@ h2 {
   }
   .box {
     width: 100%;
+  }
+  .move-right1,
+  .move-right2,
+  .move-right3,
+  .move-right4 {
+    margin-left: 0;
   }
 }

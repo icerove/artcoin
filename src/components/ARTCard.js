@@ -14,6 +14,7 @@ import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from "bn.js";
 import AlertBanner from "./Alerts";
 import tokenIcon from "./tokenIcon";
+import { FcRefresh } from "react-icons/fc";
 
 const GAS = 300000000000000;
 const UNIT = new BN("1000000000000000000000000");
@@ -253,17 +254,15 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
         <AlertBanner error={error} setError={setError} setAlert={setAlert} />
       )}
 
-      <Row noGutters className="mb-2">
+      <Row noGutters className="pb-2" style={{ background: "#f7f7fb" }}>
         <Col>
           <Card className="price">
             <Card.Body>
               <Card.Title>
                 <img src={tokenIcon.art} alt="icon" className="icon" />
-                art Price
-              </Card.Title>
-              <Card.Text>
                 {maybeLoad(artPrice, (a) => (Number(a) / 10 ** 8).toFixed(2))} $
-              </Card.Text>
+              </Card.Title>
+              <Card.Text>art</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -272,28 +271,52 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
             <Card.Body>
               <Card.Title>
                 <img src={tokenIcon.aNEAR} alt="icon" className="icon" />
-                aNEAR Price
-              </Card.Title>
-              <Card.Text>
-                {maybeLoad(nearPrice, (n) => (Number(n) / 10 ** 8).toFixed(2))}{" "}
+                {maybeLoad(nearPrice, (n) =>
+                  (Number(n) / 10 ** 8).toFixed(2)
+                )}{" "}
                 $
-              </Card.Text>
+              </Card.Title>
+              <Card.Text>aNEAR </Card.Text>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
       <Row noGutters className="p-2 mb-2" style={{ background: "#fff" }}>
-        <Col>NEAR Wallet : {currentUser.accountId} </Col>
-        <Col>NEAR Balance: {nearBalance} Ⓝ</Col>
-      </Row>
-
-      <Row noGutters className="p-2 mb-2">
-        <Col>
-          art Total Balace:{" "}
-          {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ <br />
+        <Col className="m-2 p-2" xs="12" md="4">
           <Row noGutters>
-            art Staked Balace:{" "}
+            <Col>
+              <h5>
+                <strong>NEAR</strong>
+              </h5>
+              <Row noGutters> Account: {currentUser.accountId} </Row>
+              <Row noGutters> Balance: {nearBalance} Ⓝ</Row>
+            </Col>
+          </Row>
+
+          <Row className="mt-2" noGutters>
+            <Col>
+              <h5>
+                <strong>aUSD</strong>
+              </h5>
+              <Row noGutters>
+                Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))}{" "}
+                $
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+        <Col className="m-2 p-2" xs="12" md="6">
+          <h5>
+            <strong>ARTCOIN</strong>
+          </h5>
+          <Row noGutters className="mb-1">
+            Total Balace:{" "}
+            {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ
+          </Row>
+
+          <Row noGutters className="mb-1">
+            Staked Balace:{" "}
             {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ (~ +
             {maybeLoad(artStakedBalance, (a) =>
               (
@@ -301,71 +324,74 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
               ).toFixed(4)
             )}
             /day ⓐ)
-            <Button onClick={refreshStakingReward}>
-              Refresh Staked Reward
-            </Button>
+            <button className="card-button" onClick={refreshStakingReward}>
+              <FcRefresh className="white" />
+            </button>
           </Row>
-        </Col>
-        <Col>
-          art Unstaked Balace:{" "}
-          {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ{" "}
-          <Button onClick={() => setShow(true)}>Transfer</Button>
-          <Modal show={show} onHide={() => setShow(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Transfer art to your hoomie</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form style={{ width: "100%" }} onSubmit={transferArt}>
-                <Form.Group controlId="receiver">
-                  <Form.Label>Receiver: </Form.Label>
-                  <InputGroup className="mb-2">
-                    <FormControl
-                      value={receiver}
-                      onChange={(event) => {
-                        if (event) {
-                          const value =
-                            event.target !== null ? event.target.value : "";
-                          setReceiver(value);
-                        }
-                      }}
-                    />
-                  </InputGroup>
-                </Form.Group>
 
-                <Form.Group controlId="sendamount">
-                  <Form.Label>Send Amount: </Form.Label>
-                  <InputGroup className="mb-2">
-                    <FormControl
-                      value={amount}
-                      onChange={(event) => {
-                        if (event) {
-                          const value =
-                            event.target !== null ? event.target.value : "";
-                          setAmount(value);
-                        }
-                      }}
-                    />
-                  </InputGroup>
-                </Form.Group>
+          <Row noGutters className="mb-1">
+            Available Balace:{" "}
+            {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ{" "}
+            <button className="card-button" onClick={() => setShow(true)}>
+              Transfer
+            </button>
+            <Modal show={show} onHide={() => setShow(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Transfer art to your hoomie</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form style={{ width: "100%" }} onSubmit={transferArt}>
+                  <Form.Group controlId="receiver">
+                    <Form.Label>Receiver: </Form.Label>
+                    <InputGroup className="mb-2">
+                      <FormControl
+                        value={receiver}
+                        onChange={(event) => {
+                          if (event) {
+                            const value =
+                              event.target !== null ? event.target.value : "";
+                            setReceiver(value);
+                          }
+                        }}
+                      />
+                    </InputGroup>
+                  </Form.Group>
 
-                <Button type="submit">
-                  {maybeLoad(transferSubmit, () => "Confirm Transfer")}
-                </Button>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={() => setShow(false)}>Close</Button>
-            </Modal.Footer>
-          </Modal>
+                  <Form.Group controlId="sendamount">
+                    <Form.Label>Send Amount: </Form.Label>
+                    <InputGroup className="mb-2">
+                      <FormControl
+                        value={amount}
+                        onChange={(event) => {
+                          if (event) {
+                            const value =
+                              event.target !== null ? event.target.value : "";
+                            setAmount(value);
+                          }
+                        }}
+                      />
+                    </InputGroup>
+                  </Form.Group>
+
+                  <Button type="submit">
+                    {maybeLoad(transferSubmit, () => "Confirm Transfer")}
+                  </Button>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={() => setShow(false)}>Close</Button>
+              </Modal.Footer>
+            </Modal>
+          </Row>
         </Col>
       </Row>
 
-      <Row noGutters className="p-2 mb-2">
+      <Row noGutters className="p-2 mb-2 move-right1">
         <Col>
-          <Form style={{ width: "100%" }} onSubmit={buyArtWithNear}>
+          <Form style={{ width: "80%" }} onSubmit={buyArtWithNear}>
             <Form.Row className="align-items-center">
-              <Col className="mx-1">
-                <InputGroup>
+              <Col className="mx-1" md="6" xs="12">
+                <InputGroup className="input-shadow">
                   <InputGroup.Prepend>
                     <InputGroup.Text>art</InputGroup.Text>
                   </InputGroup.Prepend>
@@ -381,7 +407,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                   />
                 </InputGroup>
               </Col>
-              <Col className="mx-1" style={{ textAlign: "end" }}>
+              <Col className="mx-1" style={{ textAlign: "start" }}>
                 <Button type="submit">Buy art with NEAR token</Button>
               </Col>
             </Form.Row>
@@ -389,18 +415,12 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
         </Col>
       </Row>
 
-      <Row noGutters className="p-2" style={{ background: "#fff" }}>
+      <Row noGutters className="p-2 mb-2 move-right2 ">
         <Col>
-          aUSD Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))}{" "}
-          $
-        </Col>
-      </Row>
-      <Row noGutters className="p-2 mb-2" style={{ background: "#fff" }}>
-        <Col>
-          <Form style={{ width: "100%" }} onSubmit={buyAusdWithNear}>
+          <Form style={{ width: "80%" }} onSubmit={buyAusdWithNear}>
             <Form.Row className="align-items-center">
-              <Col className="mx-1">
-                <InputGroup>
+              <Col className="mx-1" md="6" xs="12">
+                <InputGroup className="input-shadow">
                   <InputGroup.Prepend>
                     <InputGroup.Text>aUSD</InputGroup.Text>
                   </InputGroup.Prepend>
@@ -416,7 +436,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                   />
                 </InputGroup>
               </Col>
-              <Col className="mx-1" style={{ textAlign: "end" }}>
+              <Col className="mx-1" style={{ textAlign: "start" }}>
                 <Button type="submit">Buy aUSD with NEAR token</Button>
               </Col>
             </Form.Row>
@@ -424,11 +444,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
         </Col>
       </Row>
 
-      <Row noGutters className="p-2">
-        <Form style={{ width: "100%" }} onSubmit={stakeAndmint}>
+      <Row noGutters className="p-2 move-right4 ">
+        <Form style={{ width: "80%" }} onSubmit={stakeAndmint}>
           <Form.Row className="align-items-center">
-            <Col className="mx-1">
-              <InputGroup>
+            <Col className="mx-1" md="8">
+              <InputGroup className="input-shadow">
                 <InputGroup.Prepend>
                   <InputGroup.Text>art</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -444,7 +464,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 />
               </InputGroup>
             </Col>
-            <Col className="mx-1" style={{ textAlign: "end" }}>
+            <Col className="mx-1" style={{ textAlign: "start" }}>
               <Button type="submit">
                 {maybeLoad(stakeAndMintLoading, () => "Stake & Mint")}
               </Button>
@@ -452,11 +472,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
           </Form.Row>
         </Form>
       </Row>
-      <Row noGutters className="p-2">
-        <Form style={{ width: "100%" }} onSubmit={burnToUnstake}>
+      <Row noGutters className="p-2 move-right4 ">
+        <Form style={{ width: "80%" }} onSubmit={burnToUnstake}>
           <Form.Row className="align-items-center">
-            <Col className="mx-1">
-              <InputGroup>
+            <Col className="mx-1" md="8">
+              <InputGroup className="input-shadow">
                 <InputGroup.Prepend>
                   <InputGroup.Text>art</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -472,7 +492,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 />
               </InputGroup>
             </Col>
-            <Col className="mx-1" style={{ textAlign: "end" }}>
+            <Col className="mx-1" style={{ textAlign: "start" }}>
               <Button type="submit">
                 {maybeLoad(unstakAndBurnLoading, () => "Burn to Unstake")}
               </Button>
@@ -481,11 +501,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
         </Form>
       </Row>
 
-      <Row noGutters className="p-2" style={{ background: "#fff" }}>
-        <Form style={{ width: "100%" }} onSubmit={exchangeAUSDtoART}>
+      <Row noGutters className="p-2 move-right3 ">
+        <Form style={{ width: "80%" }} onSubmit={exchangeAUSDtoART}>
           <Form.Row className="align-items-center">
-            <Col className="mx-1">
-              <InputGroup>
+            <Col className="mx-1" md="8">
+              <InputGroup className="input-shadow">
                 <InputGroup.Prepend>
                   <InputGroup.Text>art</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -501,7 +521,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 />
               </InputGroup>
             </Col>
-            <Col className="mx-1" style={{ textAlign: "end" }}>
+            <Col className="mx-1" style={{ textAlign: "start" }}>
               <Button type="submit">
                 {maybeLoad(exchangeAUSDLoading, () => "Exchange AUSD to ART")}
               </Button>
@@ -509,11 +529,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
           </Form.Row>
         </Form>
       </Row>
-      <Row noGutters className="p-2" style={{ background: "#fff" }}>
-        <Form style={{ width: "100%" }} onSubmit={exchangeARTtoAUSD}>
+      <Row noGutters className="p-2 move-right3 ">
+        <Form style={{ width: "80%" }} onSubmit={exchangeARTtoAUSD}>
           <Form.Row className="align-items-center">
-            <Col className="mx-1">
-              <InputGroup>
+            <Col className="mx-1" md="8">
+              <InputGroup className="input-shadow">
                 <InputGroup.Prepend>
                   <InputGroup.Text>art</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -529,7 +549,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 />
               </InputGroup>
             </Col>
-            <Col className="mx-1" style={{ textAlign: "end" }}>
+            <Col className="mx-1" style={{ textAlign: "start" }}>
               <Button type="submit">
                 {maybeLoad(exchangeARTLoading, () => "Exchange ART to AUSD")}
               </Button>

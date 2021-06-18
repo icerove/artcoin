@@ -72,8 +72,10 @@ const LandingPage = ({ signIn }) => {
       </div>
       <Row noGutters className="p-5 upper-line line">
         <Row style={{ width: "100%", textAlign: "center", color: "white" }}>
-          <h1 style={{ width: "100%" }}>Features</h1>
-          <p style={{ width: "100%" }}>the best exchange you every try</p>
+          <h1 style={{ width: "100%" }}>A unique trading experience on NEAR</h1>
+          <p style={{ width: "100%" }}>
+            With very low fee and instant seattlement for trading
+          </p>
         </Row>
         <Row>
           <Col xs="12" md="4">
