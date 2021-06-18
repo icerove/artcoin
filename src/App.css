@@ -165,7 +165,6 @@ h2 {
 .landing {
   color: #fff;
   background-color: #020024;
-  height: 100vh;
 }
 
 .btnl {
@@ -192,7 +191,6 @@ h2 {
 
 .poster {
   width: 90%;
-  height: calc(100vh - 100px);
   display: flex;
   justify-content: space-around;
   max-width: 1200px;
@@ -330,11 +328,5 @@ h2 {
   .move-right3,
   .move-right4 {
     margin-left: 0;
-  }
-}
-
-@media all and (min-width: 1400px) {
-  .poster {
-    margin-top: 5%;
   }
 }
