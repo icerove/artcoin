@@ -62,7 +62,7 @@ const LandingPage = ({ signIn }) => {
             <div style={{ color: "gray" }}>
               <p>{posterSubtitle}</p>
             </div>
-            <div style={{ width: "100%", height: "50%", marginTop: "30px" }}>
+            <div style={{ width: "100%", height: "50%", marginTop: "1%" }}>
               <button className="btnl " onClick={signIn}>
                 Get Started
               </button>
