@@ -195,6 +195,7 @@ h2 {
   height: calc(100vh - 100px);
   display: flex;
   justify-content: space-around;
+  max-width: 1000px;
 }
 
 .line {
