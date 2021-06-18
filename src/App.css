@@ -195,7 +195,8 @@ h2 {
   height: calc(100vh - 100px);
   display: flex;
   justify-content: space-around;
-  max-width: 1000px;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .line {
@@ -330,5 +331,11 @@ h2 {
   .move-right3,
   .move-right4 {
     margin-left: 0;
+  }
+}
+
+@media all and (min-width: 1400px) {
+  .poster {
+    margin-top: 20%;
   }
 }

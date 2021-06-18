@@ -22,7 +22,7 @@ const LandingPage = ({ signIn }) => {
   const exchangeText =
     "Exchange between any kind of assets without compliance concerns. Trade with infinite liquidity, extremely low fee and instant settlement.";
   return (
-    <div style={{ background: "#020024", maxWidth: "1200px" }}>
+    <div style={{ background: "#020024" }}>
       <div className="landing">
         <Row noGutters className="p-4 line">
           <Col md="9" xs="12">
