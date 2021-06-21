@@ -9,8 +9,8 @@ body {
 .container {
   width: 100%;
   max-width: 1000px;
-  margin-top: 5%;
-  margin-bottom: 3%;
+  margin-top: 1%;
+  margin-bottom: 1%;
   text-align: center;
 }
 
@@ -108,7 +108,6 @@ button:hover {
 }
 
 .title-font {
-  font-size: 1.5rem;
   font-weight: 600;
 }
 
@@ -260,7 +259,7 @@ h2 {
 
 .logo-small {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .white {
@@ -329,4 +328,36 @@ h2 {
   .move-right4 {
     margin-left: 0;
   }
+}
+
+.watch-list {
+  background: #f4f2ff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 3px #d4d4d4;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  height: 72vh;
+  overflow-y: scroll;
+}
+
+.watch-item {
+  padding: 2%;
+  margin: 2% 5%;
+  border-radius: 5px;
+  box-shadow: -1px -1px 5px #fff, 1px 1px 5px #9d7dfd;
+  cursor: pointer;
+}
+
+.watch-item:hover,
+.watch-item:focus,
+.watch-item:active,
+.target0:target {
+  background: #9d7dfdc9;
+  color: #e8e3ff;
+  box-shadow: -1px -1px 5px #9d7dfd, 1px 1px 5px #fff;
 }

@@ -5,7 +5,7 @@ import Logo from "../assets/logo192.png";
 
 const Header = ({ currentUser, signOut, signIn }) => {
   return (
-    <Row noGutters className="mb-5 pb-2 line">
+    <Row noGutters className="mb-1 pb-2 line">
       <Col className="pr-2" md={currentUser ? "4" : "7"} xs="12">
         <NavLink exact to="/" className="text-d">
           <div className="logo-small">

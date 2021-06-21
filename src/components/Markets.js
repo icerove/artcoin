@@ -1,77 +1,75 @@
 import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Tabs, Tab, Row, Form, Spinner } from "react-bootstrap";
+import { Tabs, Tab, Row, Col, Spinner } from "react-bootstrap";
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 import moment from "moment";
-import {
-  API_URL,
-  coinList,
-  initialState_null,
-  initialState_null_week,
-  initialState_null_month,
-} from "./State/state";
+import { API_URL, coinList } from "./State/state";
+import tokenIcon from "./tokenIcon";
 
 const Markets = () => {
-  const [month, setMonth] = useState(initialState_null_month);
-  const [week, setWeek] = useState(initialState_null_week);
-  const [day, setDay] = useState(initialState_null);
+  const [monthPrice, setMonthPrice] = useState(null);
+  const [weekPrice, setWeekPrice] = useState(null);
+  const [dayPrice, setDayPrice] = useState(null);
+
+  const [month, setMonth] = useState(null);
+  const [week, setWeek] = useState(null);
+  const [day, setDay] = useState(null);
+
+  const [currentAsset, setCurrentAsset] = useState("art");
+
   const [ready, setReady] = useState(false);
 
-  const getPriceList = async () => {
-    let monthlyPriceList = initialState_null_month;
-    let weeklyPriceList = initialState_null_week;
-    let dailyPriceList = initialState_null;
-
-    for (const p in monthlyPriceList) {
-      let res1 = await fetch(`${API_URL}/${p}/1M`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+  const getPriceList = async (asset) => {
+    fetch(`${API_URL}/${asset}/1D`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((res) => {
+        let price = res.map((arr) => arr.price.toFixed(2));
+        let date = res.map((arr) =>
+          moment(arr.time).format("YYYY/MM/DD HH:MM:SS")
+        );
+        setDayPrice(price);
+        setDay(date);
       });
-      res1 = await res1.json();
-      monthlyPriceList[p] = res1;
-    }
-
-    for (const p in weeklyPriceList) {
-      let res2 = await fetch(`${API_URL}/${p}/1W`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    fetch(`${API_URL}/${asset}/1W`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((res) => {
+        let price = res.map((arr) => arr.price.toFixed(2));
+        let date = res.map((arr) =>
+          moment(arr.time).format("YYYY/MM/DD HH:MM:SS")
+        );
+        setWeekPrice(price);
+        setWeek(date);
       });
-      res2 = await res2.json();
-      weeklyPriceList[p] = res2;
-    }
-
-    for (const p in dailyPriceList) {
-      let res3 = await fetch(`${API_URL}/${p}/1D`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    fetch(`${API_URL}/${asset}/1M`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((res) => {
+        let price = res.map((arr) => arr.price.toFixed(2));
+        let date = res.map((arr) =>
+          moment(arr.time).format("YYYY/MM/DD HH:MM:SS")
+        );
+        setMonthPrice(price);
+        setMonth(date);
       });
-      res3 = await res3.json();
-      dailyPriceList[p] = res3;
-    }
-
-    setMonth(monthlyPriceList);
-    setWeek(weeklyPriceList);
-    setDay(dailyPriceList);
-  };
-
-  const getPrice = (array) => {
-    return array.map((arr) => arr.price.toFixed(2));
-  };
-
-  const getDate = (array) => {
-    return array.map((arr) => moment(arr.time).format("YYYY/MM/DD hh:mm:ss a"));
   };
 
   useEffect(() => {
     async function fetchData() {
-      await getPriceList();
+      await getPriceList(currentAsset);
       setReady(true);
     }
     fetchData();
@@ -106,7 +104,9 @@ const Markets = () => {
           },
           axisLabel: {
             formatter: function (value) {
-              return value > 1000 ? value / 1000 + "k" : value;
+              return value > 1000
+                ? (value / 1000).toFixed(2) + "k"
+                : value.toFixed(2);
             },
           },
           min: function (value) {
@@ -141,86 +141,73 @@ const Markets = () => {
     };
   };
 
-  const Charts = ({ index }) => {
+  const Charts = ({ asset }) => {
     return (
       <Tabs defaultActiveKey="daily" id="price">
-        <Tab eventKey="daily" title="1 Day">
+        <Tab eventKey="daily" title="Day">
           <ReactEcharts
-            option={getOption(
-              index + " / aUSD",
-              getPrice(day[index]),
-              getDate(day[index])
-            )}
-            style={{ width: "100%", height: "500px" }}
+            option={getOption(asset + " / aUSD", dayPrice, day)}
+            style={{ width: "100%", height: "70vh" }}
           />
         </Tab>
-        <Tab eventKey="week" title="1 Week">
+        <Tab eventKey="week" title="Week">
           <ReactEcharts
-            option={getOption(
-              index + " / aUSD",
-              getPrice(week[index]),
-              getDate(week[index])
-            )}
-            style={{ width: "100%", height: "780px" }}
+            option={getOption(asset + " / aUSD", weekPrice, week)}
+            style={{ width: "100%", height: "70vh" }}
           />
         </Tab>
-        <Tab eventKey="month" title="1 Month">
+        <Tab eventKey="month" title="Month">
           <ReactEcharts
-            option={getOption(
-              index + " / aUSD",
-              getPrice(month[index]),
-              getDate(month[index])
-            )}
-            style={{ width: "100%", height: "780px" }}
+            option={getOption(asset + " / aUSD", monthPrice, month)}
+            style={{ width: "100%", height: "70vh" }}
           />
         </Tab>
       </Tabs>
     );
   };
 
-  const assetItems = coinList.map((k) => <option key={k}>{k}</option>);
-
-  const [currentAsset, setCurrentAsset] = useState("art");
-
   return (
-    <>
-      <Row noGutters className="p-2" style={{ background: "#fff" }}>
-        <Form.Group controlId="formSelect">
-          <Form.Control
-            value={currentAsset}
-            as="select"
-            onChange={(event) => {
-              if (event) {
-                const value = event.target !== null ? event.target.value : "";
-                setCurrentAsset(value);
-              }
-            }}
-          >
-            {assetItems}
-          </Form.Control>
-        </Form.Group>
-      </Row>
-      {ready ? (
-        <div>
-          <Charts index={currentAsset} />
-        </div>
-      ) : (
-        <Row className="m-2 p-2">
-          <Spinner
-            animation="border"
-            style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-          />
-          <Spinner
-            animation="border"
-            style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-          />
-          <Spinner
-            animation="border"
-            style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-          />
-        </Row>
-      )}
-    </>
+    <Row noGutters>
+      <Col className="watch-list p-1" xs="12" md="4">
+        <h3 style={{ position: "sticky", top: "0" }}>Watchlist</h3>
+        <ul>
+          {coinList.map((k, i) => (
+            <li
+              key={k}
+              id={"target" + i}
+              className="watch-item target"
+              onClick={() => {
+                setCurrentAsset(k);
+                getPriceList(k);
+              }}
+            >
+              <img src={tokenIcon[k]} alt="icon" className="icon" />
+              {k}
+            </li>
+          ))}
+        </ul>
+      </Col>
+      <Col xs="12" md="8" className="p-3">
+        {ready ? (
+          <Charts asset={currentAsset} />
+        ) : (
+          <Row className="m-2 p-2">
+            <Spinner
+              animation="border"
+              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
+            />
+            <Spinner
+              animation="border"
+              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
+            />
+            <Spinner
+              animation="border"
+              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
+            />
+          </Row>
+        )}
+      </Col>
+    </Row>
   );
 };
 

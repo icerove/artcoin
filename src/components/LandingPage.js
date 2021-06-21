@@ -51,7 +51,7 @@ const LandingPage = ({ signIn }) => {
             </NavLink>
           </Col>
         </Row>
-        <Row noGutters className="p-3 m-5" className="poster">
+        <Row noGutters className="p-3 m-5 poster">
           <Col className="landing-poster d-none d-lg-block">
             <img src={Poster} alt="" />
           </Col>
@@ -172,7 +172,7 @@ const Card = ({ icon, title, text }) => {
         }}
       >
         <Col md="4">
-          <img src={icon} className="card-text" />
+          <img src={icon} className="card-text" alt="" />
         </Col>
         <Col
           style={{

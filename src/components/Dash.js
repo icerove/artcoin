@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 import { Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import moment from "moment";
-import { API_URL, coinList, initialState_null_dash } from "./State/state";
+import { API_URL, brief_coinList, initialState_null_dash } from "./State/state";
 
 const Dash = () => {
   const [day, setDay] = useState(initialState_null_dash);
@@ -39,7 +40,7 @@ const Dash = () => {
   };
 
   const getDate = (array) => {
-    return array.map((arr) => moment(arr.time).format("YYYY/MM/DD hh:mm:ss a"));
+    return array.map((arr) => moment(arr.time).format("YYYY/MM/DD HH:mm:ss"));
   };
 
   const getOption = (title, data, date) => {
@@ -61,7 +62,7 @@ const Dash = () => {
           data: date,
           axisLabel: {
             formatter: function (value) {
-              return moment(value).format("hh:mm:ss");
+              return moment(value).format("HH:mm:ss");
             },
           },
         },
@@ -76,7 +77,9 @@ const Dash = () => {
           },
           axisLabel: {
             formatter: function (value) {
-              return value > 1000 ? Math.round(value / 1000) + "k" : value;
+              return value > 1000
+                ? (value / 1000).toFixed(2) + "k"
+                : value.toFixed(2);
             },
           },
           min: function (value) {
@@ -131,11 +134,14 @@ const Dash = () => {
     <div>
       <h3>Start trading today</h3>
       <div className="dash-charts">
-        {coinList.map((coin) => (
+        {brief_coinList.map((coin) => (
           <div className="box" key={coin}>
             <Charts index={coin} />
           </div>
         ))}
+      </div>
+      <div style={{ margin: "1%" }}>
+        <Link to="/markets">-- View All Assets Stats --</Link>
       </div>
     </div>
   );
