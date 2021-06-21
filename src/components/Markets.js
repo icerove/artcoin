@@ -142,72 +142,76 @@ const Markets = () => {
   };
 
   const Charts = ({ asset }) => {
+    if (ready) {
+      return (
+        <Tabs defaultActiveKey="daily" id="price">
+          <Tab eventKey="daily" title="Day">
+            <ReactEcharts
+              option={getOption(asset + " / aUSD", dayPrice, day)}
+              style={{ width: "100%", height: "560px" }}
+            />
+          </Tab>
+          <Tab eventKey="week" title="Week">
+            <ReactEcharts
+              option={getOption(asset + " / aUSD", weekPrice, week)}
+              style={{ width: "100%", height: "560px" }}
+            />
+          </Tab>
+          <Tab eventKey="month" title="Month">
+            <ReactEcharts
+              option={getOption(asset + " / aUSD", monthPrice, month)}
+              style={{ width: "100%", height: "560px" }}
+            />
+          </Tab>
+        </Tabs>
+      );
+    }
     return (
-      <Tabs defaultActiveKey="daily" id="price">
-        <Tab eventKey="daily" title="Day">
-          <ReactEcharts
-            option={getOption(asset + " / aUSD", dayPrice, day)}
-            style={{ width: "100%", height: "70vh" }}
-          />
-        </Tab>
-        <Tab eventKey="week" title="Week">
-          <ReactEcharts
-            option={getOption(asset + " / aUSD", weekPrice, week)}
-            style={{ width: "100%", height: "70vh" }}
-          />
-        </Tab>
-        <Tab eventKey="month" title="Month">
-          <ReactEcharts
-            option={getOption(asset + " / aUSD", monthPrice, month)}
-            style={{ width: "100%", height: "70vh" }}
-          />
-        </Tab>
-      </Tabs>
+      <Row className="m-2 p-2" noGutters>
+        <Spinner
+          animation="border"
+          style={{ fontSize: "2rem", width: "2rem", height: "2rem" }}
+        />
+        <Spinner
+          animation="border"
+          style={{ fontSize: "2rem", width: "2rem", height: "2rem" }}
+        />
+        <Spinner
+          animation="border"
+          style={{ fontSize: "2rem", width: "2rem", height: "2rem" }}
+        />
+      </Row>
     );
   };
 
   return (
-    <Row noGutters>
-      <Col className="watch-list p-1" xs="12" md="4">
-        <h3 style={{ position: "sticky", top: "0" }}>Watchlist</h3>
-        <ul>
-          {coinList.map((k, i) => (
-            <li
-              key={k}
-              id={"target" + i}
-              className="watch-item target"
-              onClick={() => {
-                setCurrentAsset(k);
-                getPriceList(k);
-              }}
-            >
-              <img src={tokenIcon[k]} alt="icon" className="icon" />
-              {k}
-            </li>
-          ))}
-        </ul>
-      </Col>
-      <Col xs="12" md="8" className="p-3">
-        {ready ? (
+    <div>
+      <Row noGutters>
+        <Col className="watch-list p-1" xs="12" md="4">
+          <h3 style={{ position: "sticky", top: "0" }}>Watchlist</h3>
+          <ul>
+            {coinList.map((k, i) => (
+              <li
+                key={k}
+                className={
+                  currentAsset === k ? "watch-item item-seleted" : "watch-item"
+                }
+                onClick={() => {
+                  setCurrentAsset(k);
+                  getPriceList(k);
+                }}
+              >
+                <img src={tokenIcon[k]} alt="icon" className="icon" />
+                {k}
+              </li>
+            ))}
+          </ul>
+        </Col>
+        <Col xs="12" md="8" className="p-3">
           <Charts asset={currentAsset} />
-        ) : (
-          <Row className="m-2 p-2">
-            <Spinner
-              animation="border"
-              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-            />
-            <Spinner
-              animation="border"
-              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-            />
-            <Spinner
-              animation="border"
-              style={{ fontSize: "3rem", width: "3rem", height: "3rem" }}
-            />
-          </Row>
-        )}
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

@@ -218,7 +218,7 @@ const TradeCard = ({ contract, accountId }) => {
       {alert && (
         <AlertBanner error={error} setError={setError} setAlert={setAlert} />
       )}
-      <Row>
+      <Row noGutters>
         <Col md="4" xs="12">
           <Row noGutters className="p-2" style={{ background: "#fff" }}>
             <Col className="p-2 title-font">BUY/SELL</Col>

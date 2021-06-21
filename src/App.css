@@ -40,7 +40,8 @@ header {
 
 .head-item:hover,
 .head-item:active,
-.head-item:focus {
+.head-item:focus,
+.head-selected {
   padding: 10%;
   background: #cecbf1;
   box-shadow: 0 0 8px #7c71f4;
@@ -356,7 +357,7 @@ ul {
 .watch-item:hover,
 .watch-item:focus,
 .watch-item:active,
-.target0:target {
+.item-seleted {
   background: #9d7dfdc9;
   color: #e8e3ff;
   box-shadow: -1px -1px 5px #9d7dfd, 1px 1px 5px #fff;
