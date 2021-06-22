@@ -8,7 +8,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin-top: 1%;
   margin-bottom: 1%;
   text-align: center;
@@ -361,4 +361,13 @@ ul {
   background: #9d7dfdc9;
   color: #e8e3ff;
   box-shadow: -1px -1px 5px #9d7dfd, 1px 1px 5px #fff;
+}
+
+.tab-content,
+.tab-pane {
+  height: 100%;
+}
+
+.tab-content > .active {
+  height: 80%;
 }

@@ -148,19 +148,19 @@ const Markets = () => {
           <Tab eventKey="daily" title="Day">
             <ReactEcharts
               option={getOption(asset + " / aUSD", dayPrice, day)}
-              style={{ width: "100%", height: "560px" }}
+              style={{ width: "100%", height: "100%" }}
             />
           </Tab>
           <Tab eventKey="week" title="Week">
             <ReactEcharts
               option={getOption(asset + " / aUSD", weekPrice, week)}
-              style={{ width: "100%", height: "560px" }}
+              style={{ width: "100%", height: "100%" }}
             />
           </Tab>
           <Tab eventKey="month" title="Month">
             <ReactEcharts
               option={getOption(asset + " / aUSD", monthPrice, month)}
-              style={{ width: "100%", height: "560px" }}
+              style={{ width: "100%", height: "100%" }}
             />
           </Tab>
         </Tabs>
@@ -207,7 +207,7 @@ const Markets = () => {
             ))}
           </ul>
         </Col>
-        <Col xs="12" md="8" className="p-3">
+        <Col xs="12" md="8" className="p-3 pt-5">
           <Charts asset={currentAsset} />
         </Col>
       </Row>

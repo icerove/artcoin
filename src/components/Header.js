@@ -4,8 +4,6 @@ import { Row, Col } from "react-bootstrap";
 import Logo from "../assets/logo192.png";
 
 const Header = ({ currentUser, signOut, signIn }) => {
-  let path = window.location.pathname;
-  console.log(path);
   return (
     <Row noGutters className="mb-1 pb-2 line">
       <Col className="pr-2" md={currentUser ? "4" : "7"} xs="12">
@@ -21,34 +19,64 @@ const Header = ({ currentUser, signOut, signIn }) => {
       {currentUser && (
         <>
           <Col className="p-2">
-            <NavLink exact to="/wallet" className="head-item">
+            <NavLink
+              exact
+              to="/wallet"
+              activeClassName="head-selected"
+              className="head-item"
+            >
               Wallet
             </NavLink>
           </Col>
           <Col className="p-2">
-            <NavLink exact to="/trade" className="head-item">
+            <NavLink
+              exact
+              to="/trade"
+              activeClassName="head-selected"
+              className="head-item"
+            >
               Exchange
             </NavLink>
           </Col>
           <Col className="p-2">
-            <NavLink exact to="/stake" className="head-item">
+            <NavLink
+              exact
+              to="/stake"
+              activeClassName="head-selected"
+              className="head-item"
+            >
               Stake
             </NavLink>
           </Col>
         </>
       )}
       <Col className="p-2">
-        <NavLink exact to="/markets" className="head-item">
+        <NavLink
+          exact
+          to="/markets"
+          activeClassName="head-selected"
+          className="head-item"
+        >
           Markets
         </NavLink>
       </Col>
       <Col className="p-2">
-        <NavLink exact to="/faqs" className="head-item">
+        <NavLink
+          exact
+          to="/faqs"
+          activeClassName="head-selected"
+          className="head-item"
+        >
           FAQs
         </NavLink>
       </Col>
       <Col className="p-2">
-        <NavLink exact to="/docs" className="head-item">
+        <NavLink
+          exact
+          to="/docs"
+          activeClassName="head-selected"
+          className="head-item"
+        >
           DOCs
         </NavLink>
       </Col>
