@@ -114,7 +114,7 @@ const LandingPage = ({ signIn }) => {
             DOCs
           </NavLink>
         </Col>
-        <Col className="p-1">
+        {/* <Col className="p-1">
           <div className="blue">
             <a href="https://discord.gg/b2qvhGg8">
               <img
@@ -126,7 +126,7 @@ const LandingPage = ({ signIn }) => {
               />
             </a>
           </div>
-        </Col>
+        </Col> */}
         <Col className="p-1">
           <div className="blue">
             <a href="https://github.com/Artcoin-Network">
@@ -140,7 +140,7 @@ const LandingPage = ({ signIn }) => {
             </a>
           </div>
         </Col>
-        <Col className="p-1">
+        {/* <Col className="p-1">
           <div className="blue">
             <a href="https://twitter.com/ArtcoinNetwork">
               <img
@@ -152,7 +152,7 @@ const LandingPage = ({ signIn }) => {
               />
             </a>
           </div>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

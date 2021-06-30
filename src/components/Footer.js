@@ -52,7 +52,7 @@ const Footer = ({ currentUser }) => {
           DOCs
         </NavLink>
       </Col>
-      <Col className="p-1">
+      {/* <Col className="p-1">
         <div className="blue">
           <a href="https://discord.gg/b2qvhGg8">
             <img
@@ -64,7 +64,7 @@ const Footer = ({ currentUser }) => {
             />
           </a>
         </div>
-      </Col>
+      </Col> */}
       <Col className="p-1">
         <div className="blue">
           <a href="https://github.com/Artcoin-Network">
@@ -78,7 +78,7 @@ const Footer = ({ currentUser }) => {
           </a>
         </div>
       </Col>
-      <Col className="p-1">
+      {/* <Col className="p-1">
         <div className="blue">
           <a href="https://twitter.com/ArtcoinNetwork">
             <img
@@ -90,7 +90,7 @@ const Footer = ({ currentUser }) => {
             />
           </a>
         </div>
-      </Col>
+      </Col> */}
     </Row>
   );
 };
