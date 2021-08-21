@@ -124,7 +124,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
   // transfer
   const [receiver, setReceiver] = useState("");
-  const [amount, setAmount] = useState("");
+  const [transferAmount, setTransferAmount] = useState("");
 
   const transferArt = async (event) => {
     event.preventDefault();
@@ -135,9 +135,12 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
       await contract.transfer(
         {
           new_owner_id: receiver,
-          amount: (Number(amount) * 10 ** 24).toLocaleString("fullwide", {
-            useGrouping: false,
-          }),
+          amount: (Number(transferAmount) * 10 ** 24).toLocaleString(
+            "fullwide",
+            {
+              useGrouping: false,
+            }
+          ),
         },
         GAS
       );
@@ -381,12 +384,12 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                     <Form.Label>Send Amount: </Form.Label>
                     <InputGroup className="mb-2">
                       <FormControl
-                        value={amount}
+                        value={transferAmount}
                         onChange={(event) => {
                           if (event) {
                             const value =
                               event.target !== null ? event.target.value : "";
-                            setAmount(value);
+                            setTransferAmount(value);
                           }
                         }}
                       />
