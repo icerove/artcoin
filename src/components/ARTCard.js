@@ -102,19 +102,19 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
   const buyArtWithNear = (event) => {
     event.preventDefault();
-    let nearDeposit = new BN(deposit)
-      .mul(new BN(artPrice))
-      .mul(UNIT)
-      .div(new BN(nearPrice));
+    let nearDeposit = (
+      (Number(deposit) * 10 ** 24 * Number(artPrice)) /
+      Number(nearPrice)
+    ).toLocaleString("fullwide", { useGrouping: false });
     contract.buy_art_with_near({}, GAS, nearDeposit.toString());
   };
 
   const buyAusdWithNear = (event) => {
     event.preventDefault();
-    let nearDeposit = new BN(deposit)
-      .mul(UNIT)
-      .mul(new BN(100000000))
-      .div(new BN(nearPrice));
+    let nearDeposit = (
+      (Number(deposit) * 10 ** 24 * 100000000) /
+      Number(nearPrice)
+    ).toLocaleString("fullwide", { useGrouping: false });
     contract.buy_ausd_with_near({}, GAS, nearDeposit.toString());
   };
 
@@ -135,7 +135,9 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
       await contract.transfer(
         {
           new_owner_id: receiver,
-          amount: new BN(amount).mul(new BN(UNIT)).toString(),
+          amount: (Number(amount) * 10 ** 24).toLocaleString("fullwide", {
+            useGrouping: false,
+          }),
         },
         GAS
       );
@@ -158,9 +160,12 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setArtStakedBalance("l");
     setAusdBalance("l");
     setStakeAndMintLoading("l");
+
     try {
       await contract.stake_and_mint({
-        stake: new BN(stakeAmount).mul(new BN(UNIT)).toString(),
+        stake: (Number(stakeAmount) * 10 ** 24).toLocaleString("fullwide", {
+          useGrouping: false,
+        }),
       });
     } catch (e) {
       setAlert(true);
@@ -183,7 +188,10 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setUnstakeAndBurnLoading("l");
     try {
       await contract.burn_to_unstake({
-        unstake_amount: new BN(unstakeAmount).mul(new BN(UNIT)).toString(),
+        unstake_amount: (Number(unstakeAmount) * 10 ** 24).toLocaleString(
+          "fullwide",
+          { useGrouping: false }
+        ),
       });
     } catch (e) {
       setAlert(true);
@@ -206,9 +214,10 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setExchangeAUSDLoading("l");
     try {
       await contract.exchange_ausd_to_art({
-        ausd_amount: new BN(exchangeAUSDtoARTAmount)
-          .mul(new BN(UNIT))
-          .toString(),
+        ausd_amount: (
+          Number(exchangeAUSDtoARTAmount) *
+          10 ** 24
+        ).toLocaleString("fullwide", { useGrouping: false }),
       });
     } catch (e) {
       setAlert(true);
@@ -231,7 +240,10 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setExchangeARTLoading("l");
     try {
       await contract.exchange_art_to_ausd({
-        amount: new BN(exchangeARTtoAUSDAmount).mul(new BN(UNIT)).toString(),
+        amount: (Number(exchangeARTtoAUSDAmount) * 10 ** 24).toLocaleString(
+          "fullwide",
+          { useGrouping: false }
+        ),
       });
     } catch (e) {
       setAlert(true);
