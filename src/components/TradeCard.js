@@ -10,9 +10,10 @@ import {
   Card,
   Spinner,
 } from "react-bootstrap";
-import { formatNearAmount } from "near-api-js/lib/utils/format";
-import AlertBanner from "./Alerts";
-import tokenIcon from "./tokenIcon";
+import AlertBanner from "./utils/Alerts";
+import tokenIcon from "./utils/tokenIcon";
+import { formatNearWithDecimal } from "./utils/format";
+
 import {
   initialState_zero_price,
   initialState_zero_balance,
@@ -315,7 +316,7 @@ const TradeCard = ({ contract, accountId }) => {
 
                     <Row style={{ fontSize: "12px" }}>
                       <Col>
-                        Balance: {formatNearAmount(assetB[currentAsset], 5)}
+                        Balance: {formatNearWithDecimal(assetB[currentAsset])}
                       </Col>
                       <Col>
                         Price: 1 {currentAsset} ={" "}
@@ -411,7 +412,7 @@ const TradeCard = ({ contract, accountId }) => {
 
                     <Row style={{ fontSize: "12px" }}>
                       <Col>
-                        Balace: {formatNearAmount(assetB[currentAsset], 5)}
+                        Balace: {formatNearWithDecimal(assetB[currentAsset])}
                       </Col>
                       <Col>
                         Price: 1 {currentAsset} ={" "}

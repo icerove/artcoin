@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { formatNearAmount } from "near-api-js/lib/utils/format";
-import tokenIcon from "./tokenIcon";
+import tokenIcon from "./utils/tokenIcon";
+import { formatNearWithDecimal } from "./utils/format";
 
 import { coinList, initialState_zero_balance } from "./State/state";
 
@@ -47,7 +47,7 @@ const Account = ({ contract, accountId, ausdContract }) => {
         <img src={tokenIcon[asset]} alt="icon" className="icon" />
         {asset}
       </td>
-      <td>{formatNearAmount(assetB[asset], 5)}</td>
+      <td>{formatNearWithDecimal(assetB[asset])}</td>
     </tr>
   );
 
@@ -68,7 +68,7 @@ const Account = ({ contract, accountId, ausdContract }) => {
               <img src={tokenIcon.aUSD} alt="icon" className="icon" />
               aUSD
             </td>
-            <td>{formatNearAmount(aUSDBalnce, 5)}</td>
+            <td>{formatNearWithDecimal(aUSDBalnce)}</td>
           </tr>
           {_coinList.map((coin, index) => (
             <Tr asset={coin} index={index} />

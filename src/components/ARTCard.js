@@ -10,10 +10,11 @@ import {
   Spinner,
   Card,
 } from "react-bootstrap";
-import { formatNearAmount } from "near-api-js/lib/utils/format";
 import BN from "bn.js";
-import AlertBanner from "./Alerts";
-import tokenIcon from "./tokenIcon";
+import AlertBanner from "./utils/Alerts";
+import tokenIcon from "./utils/tokenIcon";
+import { formatNearWithDecimal } from "./utils/format";
+
 import { FcRefresh } from "react-icons/fc";
 
 const GAS = 300000000000000;
@@ -26,7 +27,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
   const [ausdBalance, setAusdBalance] = useState("l");
   const [artPrice, setArtPrice] = useState("l");
-  const nearBalance = formatNearAmount(currentUser.balance, 5);
+  const nearBalance = formatNearWithDecimal(currentUser.balance);
   const [nearPrice, setNearPrice] = useState("l");
 
   // Button text, '' means show text, 'l' means show spinner
@@ -132,12 +133,15 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setTransferSubmit("l");
     try {
       await contract.transfer(
-        { new_owner_id: receiver, amount: amount + "000000000000000000000000" },
+        {
+          new_owner_id: receiver,
+          amount: new BN(amount).mul(new BN(UNIT)).toString(),
+        },
         GAS
       );
     } catch (e) {
       setAlert(true);
-      setError(e.message);
+      setError(JSON.stringify(e));
     }
     setTransferSubmit("");
     setShow(false);
@@ -156,11 +160,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setStakeAndMintLoading("l");
     try {
       await contract.stake_and_mint({
-        stake: stakeAmount + "000000000000000000000000",
+        stake: new BN(stakeAmount).mul(new BN(UNIT)).toString(),
       });
     } catch (e) {
       setAlert(true);
-      setError(e.message);
+      setError(JSON.stringify(e));
     }
     setStakeAndMintLoading("");
     loadAUSDBalance();
@@ -179,11 +183,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setUnstakeAndBurnLoading("l");
     try {
       await contract.burn_to_unstake({
-        unstake_amount: unstakeAmount + "000000000000000000000000",
+        unstake_amount: new BN(unstakeAmount).mul(new BN(UNIT)).toString(),
       });
     } catch (e) {
       setAlert(true);
-      setError(e.message);
+      setError(JSON.stringify(e));
     }
     setUnstakeAndBurnLoading("");
     loadAUSDBalance();
@@ -202,11 +206,13 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setExchangeAUSDLoading("l");
     try {
       await contract.exchange_ausd_to_art({
-        ausd_amount: exchangeAUSDtoARTAmount + "000000000000000000000000",
+        ausd_amount: new BN(exchangeAUSDtoARTAmount)
+          .mul(new BN(UNIT))
+          .toString(),
       });
     } catch (e) {
       setAlert(true);
-      setError(e.message);
+      setError(JSON.stringify(e));
     }
     setExchangeAUSDLoading("");
     loadAUSDBalance();
@@ -225,11 +231,11 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
     setExchangeARTLoading("l");
     try {
       await contract.exchange_art_to_ausd({
-        amount: exchangeARTtoAUSDAmount + "000000000000000000000000",
+        amount: new BN(exchangeARTtoAUSDAmount).mul(new BN(UNIT)).toString(),
       });
     } catch (e) {
       setAlert(true);
-      setError(e.message);
+      setError(JSON.stringify(e));
     }
     setExchangeARTLoading("");
     loadAUSDBalance();
@@ -240,6 +246,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
   //modal
   const [show, setShow] = useState(false);
 
+  // loading pattern
   const maybeLoad = (state, displayFun) => {
     if (state === "l") {
       return <Spinner size="sm" animation="border" />;
@@ -300,8 +307,8 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 <strong>aUSD</strong>
               </h5>
               <Row noGutters>
-                Balance: {maybeLoad(ausdBalance, (a) => formatNearAmount(a, 5))}{" "}
-                $
+                Balance:{" "}
+                {maybeLoad(ausdBalance, (a) => formatNearWithDecimal(a))} $
               </Row>
             </Col>
           </Row>
@@ -312,12 +319,13 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
           </h5>
           <Row noGutters className="mb-1">
             Total Balace:{" "}
-            {maybeLoad(artTotalBalance, (a) => formatNearAmount(a, 5))} ⓐ
+            {maybeLoad(artTotalBalance, (a) => formatNearWithDecimal(a))} ⓐ
           </Row>
 
           <Row noGutters className="mb-1">
             Staked Balace:{" "}
-            {maybeLoad(artStakedBalance, (a) => formatNearAmount(a, 5))} ⓐ (~ +
+            {maybeLoad(artStakedBalance, (a) => formatNearWithDecimal(a))} ⓐ (~
+            +
             {maybeLoad(artStakedBalance, (a) =>
               (
                 0.000261 * new BN(artStakedBalance).div(UNIT).toNumber()
@@ -331,7 +339,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
           <Row noGutters className="mb-1">
             Available Balace:{" "}
-            {maybeLoad(artUnstakedBalance, (a) => formatNearAmount(a, 5))} ⓐ{" "}
+            {maybeLoad(artUnstakedBalance, (a) => formatNearWithDecimal(a))} ⓐ{" "}
             <button className="card-button" onClick={() => setShow(true)}>
               Transfer
             </button>

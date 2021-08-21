@@ -4,7 +4,7 @@ import ReactEcharts from "echarts-for-react";
 import * as echarts from "echarts";
 import moment from "moment";
 import { API_URL, coinList } from "./State/state";
-import tokenIcon from "./tokenIcon";
+import tokenIcon from "./utils/tokenIcon";
 
 const Markets = () => {
   const [monthPrice, setMonthPrice] = useState(null);
