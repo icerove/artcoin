@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect } from "react";
 import {
   Row,
@@ -26,10 +27,11 @@ import { API_URL } from "./State/state";
 
 const GAS = 300000000000000;
 
-const TradeCard = ({ contract, accountId }) => {
+const TradeCard = ({ contract, accountId, ausdContract }) => {
   const [assetP, setAssetP] = useState(initialState_zero_price);
   const [assetB, setAssetB] = useState(initialState_zero_balance);
   const [currentAsset, setCurrentAsset] = useState("aBTC");
+  const [ausdBalance, setAusdBalance] = useState("l");
 
   // Button text, '' means show text, 'l' means show spinner
   const [buyLoading, setBuyLoading] = useState("");
@@ -41,6 +43,12 @@ const TradeCard = ({ contract, accountId }) => {
     } else {
       return displayFun(state);
     }
+  };
+
+  const loadAUSDBalance = () => {
+    ausdContract
+      .get_balance({ owner_id: accountId })
+      .then((ausd) => setAusdBalance(ausd));
   };
 
   const loadCurrentAssetPrice = () => {
@@ -153,10 +161,12 @@ const TradeCard = ({ contract, accountId }) => {
   };
 
   useEffect(() => {
+    loadAUSDBalance();
     loadCurrentAssetPrice();
     loadCurrentAssetBalance();
     loadPriceChart(currentAsset);
     setInterval(() => {
+      loadAUSDBalance();
       loadCurrentAssetPrice();
     }, 300000);
   }, []);
@@ -242,6 +252,10 @@ const TradeCard = ({ contract, accountId }) => {
                 </Form.Control>
               </Form.Group>
             </Col>
+          </Row>
+          <Row noGutters className="p-2" style={{ background: "#fff" }}>
+            aUSD Balance:{" "}
+            {maybeLoad(ausdBalance, (a) => formatNearWithDecimal(a))} $
           </Row>
           <Accordion defaultActiveKey="0">
             <Card>

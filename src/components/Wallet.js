@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Spinner } from "react-bootstrap";
 import tokenIcon from "./utils/tokenIcon";
 import { formatNearWithDecimal } from "./utils/format";
 
@@ -9,6 +9,7 @@ const Account = ({ contract, accountId, ausdContract }) => {
   const _coinList = coinList.filter((coin) => coin !== "art");
 
   const [assetB, setAssetB] = useState(initialState_zero_balance);
+  const [assetLoading, setLoading] = useState(false);
 
   const loadAssetBalance = async (a) => {
     return await contract.get_asset_balance({
@@ -35,7 +36,9 @@ const Account = ({ contract, accountId, ausdContract }) => {
       }
 
       setAssetB(asset);
+      setLoading(false);
     }
+    setLoading(true);
     loadAUSDBalance();
     loadBalance();
   }, []);
@@ -47,7 +50,15 @@ const Account = ({ contract, accountId, ausdContract }) => {
         <img src={tokenIcon[asset]} alt="icon" className="icon" />
         {asset}
       </td>
-      <td>{formatNearWithDecimal(assetB[asset])}</td>
+      <td>
+        {assetLoading ? (
+          <Spinner animation="border" role="status" size="sm">
+            <span className="visually-hidden">...</span>
+          </Spinner>
+        ) : (
+          formatNearWithDecimal(assetB[asset])
+        )}
+      </td>
     </tr>
   );
 

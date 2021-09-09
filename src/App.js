@@ -140,7 +140,11 @@ const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
           exact
           path="/trade"
           render={() => (
-            <TradeCard contract={contract} accountId={currentUser.accountId} />
+            <TradeCard
+              contract={contract}
+              accountId={currentUser.accountId}
+              ausdContract={ausdContract}
+            />
           )}
         />
         <Route
