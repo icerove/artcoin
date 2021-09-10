@@ -19,6 +19,10 @@ import "./App.css";
 
 const App = ({ contract, currentUser, nearConfig, wallet, ausdContract }) => {
   const [isLoading, setLoading] = useState(false);
+  if (!localStorage.getItem("guide")) {
+    localStorage.setItem("guide", "0");
+    localStorage.setItem("ausd", "false");
+  }
 
   const signIn = useCallback(() => {
     wallet.requestSignIn(nearConfig.contractName, "NEAR art Coin");

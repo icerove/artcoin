@@ -371,3 +371,15 @@ ul {
 .tab-content > .active {
   height: 80%;
 }
+
+.guide {
+  position: fixed;
+  width: 360px;
+  float: right;
+  z-index: 1;
+  box-shadow: 0 0 10px 3px #004085;
+}
+
+.guide-right {
+  width: 550px;
+}

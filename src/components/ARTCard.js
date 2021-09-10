@@ -16,6 +16,7 @@ import tokenIcon from "./utils/tokenIcon";
 import { formatNearWithDecimal } from "./utils/format";
 
 import { FcRefresh } from "react-icons/fc";
+import Guide from "./utils/Guide";
 
 const GAS = 300000000000000;
 const UNIT = new BN("1000000000000000000000000");
@@ -29,7 +30,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
   const [artPrice, setArtPrice] = useState("l");
   const nearBalance = formatNearWithDecimal(currentUser.balance);
   const [nearPrice, setNearPrice] = useState("l");
-
+  console.log(ausdBalance);
   // Button text, '' means show text, 'l' means show spinner
   const [transferSubmit, setTransferSubmit] = useState("");
   const [stakeAndMintLoading, setStakeAndMintLoading] = useState("");
@@ -111,6 +112,7 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
   const buyAusdWithNear = (event) => {
     event.preventDefault();
+    localStorage.setItem("ausd", "true");
     let nearDeposit = (
       (Number(deposit) * 10 ** 24 * 100000000) /
       Number(nearPrice)
@@ -260,6 +262,9 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
 
   //modal
   const [show, setShow] = useState(false);
+
+  // guide
+  const [guideShow, setGuideShow] = useState(true);
 
   // loading pattern
   const maybeLoad = (state, displayFun) => {
@@ -460,7 +465,17 @@ const ARTCard = ({ currentUser, contract, ausdContract }) => {
                 </InputGroup>
               </Col>
               <Col className="mx-1" style={{ textAlign: "start" }}>
-                <Button type="submit">Buy aUSD with NEAR token</Button>
+                <Button type="submit" className="buy-ausd">
+                  Buy aUSD with NEAR token
+                </Button>
+                {ausdBalance === "0" && guideShow && (
+                  <Guide
+                    title="Get aUSD"
+                    setGuideShow={setGuideShow}
+                    nodismiss
+                    className="guide-right"
+                  />
+                )}
               </Col>
             </Form.Row>
           </Form>
