@@ -6,7 +6,7 @@ const Guide = ({ title, setGuideShow, actionCount, className, nodismiss }) => {
     Stake:
       "Firstly, get aUSD from stake page. It is first step to trade other assets on exchange.",
     "Get aUSD":
-      "Here is the place to get aUSD. Input reasonable amount and click button, all down.",
+      "Here is the place to get aUSD. Input reasonable amount and click button.",
     Exchange:
       "After get some aUSD, you can trade many kinds of assets without difficulty on exchange page.",
     Wallet:
